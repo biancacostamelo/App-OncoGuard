@@ -2,6 +2,7 @@ package com.example.oncoguard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,7 +27,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 
 @Composable
-fun CustomBottomBar() {
+fun CustomBottomBar(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,7 +68,11 @@ fun CustomBottomBar() {
                 .offset(y = (-20).dp)
                 .size(80.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFB4005E)), contentAlignment = Alignment.Center
+                .background(Color(0xFFB4005E))
+                .clickable {
+                    navController.navigate(Screen.Cadastro.route)
+                },
+                contentAlignment = Alignment.Center
         ) {
             Box(
                 modifier = Modifier
@@ -93,6 +98,6 @@ fun CustomBottomBar() {
 @Composable
 fun AboutScreenPreview() {
     CustomBottomBar(
-
+        navController = NavController(LocalContext.current) // TODO()
     )
 }

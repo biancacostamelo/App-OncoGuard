@@ -1,8 +1,12 @@
 package com.example.oncoguard
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +32,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,7 +55,7 @@ import androidx.navigation.NavController
 @Composable
 fun ConfigScreen(navController: NavController) {
     Scaffold(
-        bottomBar = { CustomBottomBar() },
+        bottomBar = { CustomBottomBar(navController = NavController(LocalContext.current)) },
         topBar = {
             CustomTopAppBar(
                 title = "Voltar",
@@ -156,39 +164,55 @@ fun ConfigScreen(navController: NavController) {
                     }
                 }
 
+                var isClicked by remember { mutableStateOf(false) }
+
+                val backgroundColor by animateColorAsState(
+                    targetValue = if (isClicked) Color.LightGray else Color.Transparent,
+                    animationSpec = tween(durationMillis = 300),
+                    label = ""
+                )
+
                 Column() {
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .drawBehind {
-                                // Linha inferior (2.dp, rosa)
-                                val strokeWidth = 1.dp.toPx()
-                                val y = size.height - strokeWidth / 2
-                                drawLine(
-                                    color = Color(0xFFB60158),
-                                    start = Offset(0f, y),
-                                    end = Offset(size.width, y),
-                                    strokeWidth = strokeWidth
+                    //Button(onClick = {}) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(20.dp))
+                                .drawBehind {
+                                    val strokeWidth = 1.dp.toPx()
+                                    val y = size.height - strokeWidth / 2
+                                    drawLine(
+                                        color = Color(0xFFB60158),
+                                        start = Offset(0f, y),
+                                        end = Offset(size.width, y),
+                                        strokeWidth = strokeWidth
+                                    )
+                                }
+                                .padding(vertical = 10.dp)
+                            /* .background(backgroundColor)
+                             .clickable {
+                                 isClicked = !isClicked
+                             }*/
+                            ,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IconButton(onClick = {  }) {
+                                Icon(
+                                    Icons.Filled.Edit,
+                                    "Localized description",
+                                    tint = Color(0xFFB60158)
                                 )
                             }
-                            .padding(vertical = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(onClick = { /* ação adicionar */ }) {
-                            Icon(
-                                Icons.Filled.Edit,
-                                "Localized description",
-                                tint = Color(0xFFB60158)
+                            Text(
+                                text = "Notificações",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Color(color = 0xFFB60158)
                             )
                         }
-                        Text(
-                            text = "Notificações",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color(color = 0xFFB60158)
-                        )
-                    }
+                   // }
+
 
                     Row(
                         modifier = Modifier
@@ -259,7 +283,10 @@ fun ConfigScreen(navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-
+                            .background(backgroundColor)
+                            .clickable {
+                                isClicked = !isClicked
+                            }
                             .drawBehind {
                                 // Linha inferior (2.dp, rosa)
                                 val strokeWidth = 1.dp.toPx()
@@ -319,6 +346,8 @@ fun ConfigScreen(navController: NavController) {
                             color = Color(color = 0xFFB60158)
                         )
                     }
+
+
 
                 }
 

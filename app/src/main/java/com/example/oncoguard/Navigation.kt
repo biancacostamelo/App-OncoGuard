@@ -21,7 +21,7 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         // A função NavHost é responsável por gerenciar a navegação entre as telas
         navController = navController,
-        startDestination = Screen.ConfigScreen.route
+        startDestination = Screen.Splash.route
     ) {
         composable(Screen.Splash.route) {
             SplashScreen(navController)
