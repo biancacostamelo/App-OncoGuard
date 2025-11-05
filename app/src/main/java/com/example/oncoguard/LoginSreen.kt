@@ -78,7 +78,7 @@ fun LoginScreen(navController: NavController) {
                         .widthIn(max = 400.dp)
                         .fillMaxWidth(0.9f),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(30.dp)
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     OutlinedTextField(
                         value = email,

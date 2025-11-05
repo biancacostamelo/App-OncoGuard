@@ -27,7 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -80,7 +82,7 @@ fun CadastroScreen(navController: NavController){
                         .widthIn(max = 400.dp)
                         .fillMaxWidth(0.9f),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(30.dp)
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     OutlinedTextField(
                         value = nome,
@@ -139,8 +141,13 @@ fun CadastroScreen(navController: NavController){
                 )
             }
         }
-
     }
+}
 
-
+@Preview(showBackground = true)
+@Composable
+fun CadastroPreview() {
+    CadastroScreen(
+        navController = NavController(LocalContext.current) // TODO()
+    )
 }
