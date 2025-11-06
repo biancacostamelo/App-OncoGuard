@@ -55,7 +55,7 @@ import androidx.navigation.NavController
 @Composable
 fun ConfigScreen(navController: NavController) {
     Scaffold(
-        bottomBar = { CustomBottomBar(navController = NavController(LocalContext.current)) },
+        bottomBar = { CustomBottomBar(navController = navController) },
         topBar = {
             CustomTopAppBar(
                 title = "Voltar",
@@ -132,7 +132,7 @@ fun ConfigScreen(navController: NavController) {
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.SemiBold
                                 )
-                                IconButton(onClick = { /* ação adicionar */ }) {
+                                IconButton(onClick = { navController.navigate(Screen.EditarPerfil.route) }) {
                                     Icon(
                                         Icons.Filled.Edit,
                                         "Localized description",

@@ -42,7 +42,7 @@ import androidx.navigation.NavController
 @Composable
 fun EditarPerfilScreen(navController: NavController){
     Scaffold(
-        bottomBar = { CustomBottomBar(navController = NavController(LocalContext.current)) },
+        bottomBar = { CustomBottomBar(navController = navController) },
         topBar = {
             CustomTopAppBar(
                 title = "Voltar",

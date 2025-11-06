@@ -53,12 +53,12 @@ fun CustomBottomBar(navController: NavController) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /* ação home */ }) {
-                Icon(Icons.Filled.Home, "Localized description", tint = Color(0xFFB60158))
+            IconButton(onClick = { navController.navigate(Screen.Home.route) }) {
+                Icon(imageVector = Icons.Filled.Home, "Localized description", tint = Color(0xFFB60158))
             }
 
-            IconButton(onClick = { /* ação adicionar */ }) {
-                Icon(Icons.Filled.Add, "Localized description", tint = Color(0xFFB60158))
+            IconButton(onClick = { navController.navigate(Screen.Planos.route) }) {
+                Icon(imageVector = Icons.Filled.Add, "Localized description", tint = Color(0xFFB60158))
             }
         }
 

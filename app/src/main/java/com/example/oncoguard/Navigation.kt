@@ -12,9 +12,10 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Inicio : Screen("inicio")
     object Login : Screen("login")
-    object  Cadastro : Screen("cadastro")
-    object  ConfigScreen : Screen("ConfigScreen")
+    object Cadastro : Screen("cadastro")
+    object ConfigScreen : Screen("ConfigScreen")
     object EditarPerfil: Screen("EditarPerfil")
+    object Planos: Screen("Planos")
 }
 
 @Composable
@@ -22,7 +23,7 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         // A função NavHost é responsável por gerenciar a navegação entre as telas
         navController = navController,
-        startDestination = Screen.EditarPerfil.route
+        startDestination = Screen.Splash.route
     ) {
         composable(Screen.Splash.route) {
             SplashScreen(navController)
@@ -44,6 +45,9 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         }
         composable(Screen.EditarPerfil.route) {
             EditarPerfilScreen(navController)
+        }
+        composable(Screen.Planos.route) {
+            PlanosScreen(navController)
         }
     }
 }
