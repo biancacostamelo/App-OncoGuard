@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
@@ -28,7 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,7 +51,8 @@ fun CadastroScreen(navController: NavController){
                 title = "Voltar",
                 navigationIcon = Icons.Default.Info,
                 showBackButton = true,
-                navController = navController
+                navController = navController,
+                titleColor = Color(0xFFFFFFFF)
             )
         }
     ){ paddingValues ->
@@ -87,24 +92,33 @@ fun CadastroScreen(navController: NavController){
                     OutlinedTextField(
                         value = nome,
                         onValueChange = { nome = it },
-                        label = { Text("Nome", color = Color(0x5EB60158)) },
+                        label = { Text("Nome", color = Color(0xFF4F4E4E)) },
+                        textStyle = TextStyle(color = Color(0xFF494949)),
                         shape = RoundedCornerShape(10.dp)
-
                     )
 
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
-                        label = { Text("Email", color = Color(0x5EB60158)) },
-                        shape = RoundedCornerShape(10.dp)
+                        label = { Text("Email", color = Color(0xFF4F4E4E)) },
+                        textStyle = TextStyle(color = Color(0xFF494949)),
+                        shape = RoundedCornerShape(10.dp),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Email
+                        )
                     )
 
 
                     OutlinedTextField(
                         value = senha,
                         onValueChange = { senha = it },
-                        label = { Text("Senha", color = Color(0x5EB60158)) },
-                        shape = RoundedCornerShape(10.dp)
+                        label = { Text("Senha", color = Color(0xFF4F4E4E)) },
+                        textStyle = TextStyle(color = Color(0xFF494949)),
+                        shape = RoundedCornerShape(10.dp),
+                        visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword
+                        )
                     )
                 }
                 Button(

@@ -28,10 +28,14 @@ import androidx.navigation.NavController
 
 @Composable
 fun CustomBottomBar(navController: NavController) {
+
+    val insetsPadding = WindowInsets.navigationBars.asPaddingValues()
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(125.dp)
+            .padding(insetsPadding)
             .background(Color.Transparent),
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -70,7 +74,7 @@ fun CustomBottomBar(navController: NavController) {
                 .clip(CircleShape)
                 .background(Color(0xFFB4005E))
                 .clickable {
-                    navController.navigate(Screen.Cadastro.route)
+                    navController.navigate(Screen.ChatScreen.route)
                 },
                 contentAlignment = Alignment.Center
         ) {

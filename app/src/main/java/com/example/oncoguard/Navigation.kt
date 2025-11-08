@@ -16,6 +16,7 @@ sealed class Screen(val route: String) {
     object ConfigScreen : Screen("ConfigScreen")
     object EditarPerfil: Screen("EditarPerfil")
     object Planos: Screen("Planos")
+    object ChatScreen: Screen("ChatScreen")
 }
 
 @Composable
@@ -48,6 +49,9 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         }
         composable(Screen.Planos.route) {
             PlanosScreen(navController)
+        }
+        composable(Screen.ChatScreen.route) {
+            ChatScreen(navController)
         }
     }
 }

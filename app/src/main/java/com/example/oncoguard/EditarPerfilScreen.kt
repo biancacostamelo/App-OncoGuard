@@ -5,11 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -33,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,6 +47,7 @@ import androidx.navigation.NavController
 fun EditarPerfilScreen(navController: NavController){
     Scaffold(
         bottomBar = { CustomBottomBar(navController = navController) },
+        contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             CustomTopAppBar(
                 title = "Voltar",
@@ -55,7 +60,8 @@ fun EditarPerfilScreen(navController: NavController){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
+            .consumeWindowInsets(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
@@ -116,29 +122,33 @@ fun EditarPerfilScreen(navController: NavController){
                 OutlinedTextField(
                     value = nome,
                     onValueChange = { nome = it },
-                    label = { Text("Nome", color = Color(0x5EB60158)) },
-                    shape = RoundedCornerShape(10.dp)
+                    label = { Text("Nome", color = Color(0xFF4F4E4E)) },
+                    shape = RoundedCornerShape(10.dp),
+                    textStyle = TextStyle(color = Color(0xFF494949)),
                 )
 
                 OutlinedTextField(
                     value = aniversario,
                     onValueChange = { aniversario = it },
-                    label = { Text("Aniversário", color = Color(0x5EB60158)) },
-                    shape = RoundedCornerShape(10.dp)
+                    label = { Text("Aniversário", color = Color(0xFF4F4E4E)) },
+                    shape = RoundedCornerShape(10.dp),
+                    textStyle = TextStyle(color = Color(0xFF494949)),
                 )
 
                 OutlinedTextField(
                     value = telefone,
                     onValueChange = { telefone = it },
-                    label = { Text("Telefone", color = Color(0x5EB60158)) },
-                    shape = RoundedCornerShape(10.dp)
+                    label = { Text("Telefone", color = Color(0xFF4F4E4E)) },
+                    shape = RoundedCornerShape(10.dp),
+                    textStyle = TextStyle(color = Color(0xFF494949)),
                 )
 
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
-                    label = { Text("E-mail", color = Color(0x5EB60158)) },
-                    shape = RoundedCornerShape(10.dp)
+                    label = { Text("E-mail", color = Color(0xFF4F4E4E)) },
+                    shape = RoundedCornerShape(10.dp),
+                    textStyle = TextStyle(color = Color(0xFF494949)),
                 )
 
                 Button(

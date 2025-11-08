@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +24,8 @@ fun CustomTopAppBar(
     title: String,
     navigationIcon: ImageVector,
     showBackButton: Boolean,
-    navController: NavController? = null
+    navController: NavController? = null,
+    titleColor: Color = Color.White
 ){
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -31,7 +33,7 @@ fun CustomTopAppBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         title = {
-            Text(title)
+            Text(title,  color = titleColor)
         },
         navigationIcon = {
             if (showBackButton && navController != null) {

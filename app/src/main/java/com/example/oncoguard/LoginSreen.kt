@@ -1,5 +1,6 @@
 package com.example.oncoguard
 
+import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
@@ -27,7 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -83,8 +89,13 @@ fun LoginScreen(navController: NavController) {
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
-                        label = { Text("Email", color = Color(0x5EB60158)) },
-                        shape = RoundedCornerShape(10.dp)
+                        label = { Text("Email", color = Color(0xFF4F4E4E)) },
+                        shape = RoundedCornerShape(10.dp),
+                        textStyle = TextStyle(color = Color(0xFF494949)),
+                        placeholder = { Text("Ex: alicesilva12@gmail.com", color = Color(0xFFBCBCBC)) },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Email
+                        )
                     )
 
                     var text by remember { mutableStateOf("") }
@@ -92,8 +103,13 @@ fun LoginScreen(navController: NavController) {
                     OutlinedTextField(
                         value = senha,
                         onValueChange = { senha = it },
-                        label = { Text("Senha", color = Color(0x5EB60158)) },
-                        shape = RoundedCornerShape(10.dp)
+                        label = { Text("Senha", color = Color(0xFF4F4E4E)) },
+                        textStyle = TextStyle(color = Color(0xFF494949)),
+                        shape = RoundedCornerShape(10.dp),
+                        visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword
+                        )
                     )
                 }
                 Button(

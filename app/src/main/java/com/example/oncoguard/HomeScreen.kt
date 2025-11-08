@@ -2,8 +2,11 @@ package com.example.oncoguard
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -21,19 +24,20 @@ import androidx.navigation.NavController
 import com.example.oncoguard.ui.theme.OncoGuardTheme
 
 @Composable
-fun HomeScreen(navController: NavController){
+fun HomeScreen(navController: NavController) {
 
     Scaffold(
-        bottomBar = { CustomBottomBar(navController = navController) }
+        bottomBar = { CustomBottomBar(navController = navController) },
+        contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
 
         Row(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-
+                .consumeWindowInsets(paddingValues)
         ) {
-            Text(text = "Home Screen", color = Color.Yellow, fontSize = 40.sp)
+            Text(text = "Home Screen", color = Color.Magenta, fontSize = 40.sp)
 
             IconButton(onClick = { navController.navigate(Screen.ConfigScreen.route) }) {
                 Icon(Icons.Filled.AccountCircle, "Localized description", tint = Color(0xFFB60158))
