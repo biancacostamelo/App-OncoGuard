@@ -4,6 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,16 +20,34 @@ import androidx.navigation.NavController
 @Composable
 fun ChatScreen(navController: NavController) {
 
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF2A1D9))
+    Scaffold(
+        bottomBar = { CustomBottomBar(navController = navController) },
+        topBar = {
+            CustomTopAppBar(
+                title = "Chat IA",
+                navigationIcon = Icons.Default.Info,
+                showBackButton = true,
+                navController = navController
+            )
+        }
     )
+    { paddingValues ->
 
-    { Text("Como posso ajudar?")
-        Image(painter = painterResource(id=R.drawable.aliciachat), contentDescription = "Foto da nossa IA")
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF2A1D9))
+                .padding(paddingValues)
+        )
+
+        {
+            Text("Como posso ajudar?")
+            Image(
+                painter = painterResource(id = R.drawable.aliciachat),
+                contentDescription = "Foto da nossa IA"
+            )
+        }
     }
-
 }
 
 @Preview(showBackground = true)
