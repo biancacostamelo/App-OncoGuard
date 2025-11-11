@@ -73,5 +73,6 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         composable (Screen.TelaONGS.route){
             TelaONGS(navController)
         }
+
     }
 }

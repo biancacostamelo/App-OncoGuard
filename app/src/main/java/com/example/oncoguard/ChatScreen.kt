@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 fun ChatScreen(navController: NavController) {
 
     Scaffold(
-        bottomBar = { CustomBottomBar(navController = navController) },
         topBar = {
             CustomTopAppBar(
                 title = "Chat IA",
