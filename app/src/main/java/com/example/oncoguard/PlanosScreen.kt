@@ -2,41 +2,250 @@ package com.example.oncoguard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
 fun PlanosScreen(navController: NavController) {
     Scaffold(
-        bottomBar = { CustomBottomBar(navController = navController) },
+        bottomBar = { CustomBottomBar2(navController = navController) },
         contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFFFFFFF))
+                .background(Color(0xFF54A1E0))
                 .padding(paddingValues)
+                .padding(horizontal = 22.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text("Tela de planos", color = Color.Magenta, fontSize = 35.sp)
+            Column( horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 40.dp)) {
+                
+            Text("PLANOS", color = Color.White, fontSize = 36.sp, fontWeight = FontWeight.Bold)
+            Text(
+                "Navegue sem limites!",
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium
+            )
+            }
+
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+                    .fillMaxWidth()
+                    .height(184.dp)
+                    .padding(22.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                Column{
+                    Text(
+                        "Diamante",
+                        color = Color(0xFFB60158),
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Row(  verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            "R\$ 230,00",
+                            color = Color(0x78B60158),
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(7.dp))
+                        Text(
+                            "Real/\n" +
+                                    "mês",
+                            color = Color(0x9F232323),
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        modifier = Modifier
+                            .width(214.dp),
+                        shape = RoundedCornerShape(60.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                    ) {
+                        Text(
+                            text = "Obter Diamante",
+                            color = Color.White,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+                Column (modifier = Modifier.padding(start = 30.dp)){
+                    Image(
+                        painter = painterResource(R.drawable.planosdiamante),
+                        contentDescription = "plano diamante",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+                    .fillMaxWidth()
+                    .height(184.dp)
+                    .padding(22.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                Column{
+                    Text(
+                        "Ouro",
+                        color = Color(0xFFB60158),
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Row(  verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            "R\$ 200,00",
+                            color = Color(0x78B60158),
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(7.dp))
+                        Text(
+                            "Real/\n" +
+                                    "mês",
+                            color = Color(0x9F232323),
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        modifier = Modifier
+                            .width(214.dp),
+                        shape = RoundedCornerShape(60.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                    ) {
+                        Text(
+                            text = "Obter Ouro",
+                            color = Color.White,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+                Column (modifier = Modifier.padding(start = 30.dp)){
+                    Image(
+                        painter = painterResource(R.drawable.planosouro),
+                        contentDescription = "plano diamante",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+                    .fillMaxWidth()
+                    .height(184.dp)
+                    .padding(22.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+
+            ) {
+                Column{
+                    Text(
+                        "Prata",
+                        color = Color(0xFFB60158),
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Row(  verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            "R\$ 0,00",
+                            color = Color(0x78B60158),
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(7.dp))
+                        Text(
+                            "Real/\n" +
+                                    "mês",
+                            color = Color(0x9F232323),
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        modifier = Modifier
+                            .width(214.dp),
+                        shape = RoundedCornerShape(60.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                    ) {
+                        Text(
+                            text = "Plano atual",
+                            color = Color.White,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+                Column (modifier = Modifier.padding(start = 30.dp)){
+                    Image(
+                        painter = painterResource(R.drawable.planosprata),
+                        contentDescription = "plano diamante",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
+            }
         }
     }
 }
