@@ -75,7 +75,7 @@ fun PlanosScreen(navController: NavController) {
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.White)
                     .fillMaxWidth()
-                    .height(184.dp)
+                    .height(174.dp)
                     .padding(22.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
@@ -97,17 +97,18 @@ fun PlanosScreen(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         Text(
-                            "Real/\n" +
-                                    "mês",
+                            "R$/ mês",
                             color = Color(0x9F232323),
                             fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(top = 10.dp)
                         )
                     }
                     Button(
                         onClick = {},
                         modifier = Modifier
-                            .width(214.dp),
+                            .width(184.dp),
                         shape = RoundedCornerShape(60.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
                     ) {
@@ -134,7 +135,7 @@ fun PlanosScreen(navController: NavController) {
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.White)
                     .fillMaxWidth()
-                    .height(184.dp)
+                    .height(174.dp)
                     .padding(22.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
@@ -147,7 +148,7 @@ fun PlanosScreen(navController: NavController) {
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Row(  verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             "R\$ 200,00",
                             color = Color(0x78B60158),
@@ -156,17 +157,18 @@ fun PlanosScreen(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         Text(
-                            "Real/\n" +
-                                    "mês",
+                            "R$/ mês",
                             color = Color(0x9F232323),
                             fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(top = 10.dp)
                         )
                     }
                     Button(
                         onClick = {},
                         modifier = Modifier
-                            .width(214.dp),
+                            .width(184.dp),
                         shape = RoundedCornerShape(60.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
                     ) {
@@ -193,7 +195,7 @@ fun PlanosScreen(navController: NavController) {
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.White)
                     .fillMaxWidth()
-                    .height(184.dp)
+                    .height(174.dp)
                     .padding(22.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
@@ -215,17 +217,18 @@ fun PlanosScreen(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.width(7.dp))
                         Text(
-                            "Real/\n" +
-                                    "mês",
+                            "R$/ mês",
                             color = Color(0x9F232323),
                             fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(top = 10.dp)
                         )
                     }
                     Button(
                         onClick = {},
                         modifier = Modifier
-                            .width(214.dp),
+                            .width(184.dp),
                         shape = RoundedCornerShape(60.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
                     ) {
