@@ -1,4 +1,4 @@
-package com.example.oncoguard
+package com.example.oncoguard.feature.perfil
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +40,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.oncoguard.core.components.CustomBottomBar
+import com.example.oncoguard.core.components.CustomTopAppBar
+import com.example.oncoguard.R
+import com.example.oncoguard.core.navigation.Screen
 
 @Composable
 fun EditarPerfilScreen(navController: NavController){

@@ -1,4 +1,4 @@
-package com.example.oncoguard
+package com.example.oncoguard.feature.home
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
@@ -18,6 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.oncoguard.core.components.CustomBottomBar
+import com.example.oncoguard.core.components.CustomTopAppBar
+import com.example.oncoguard.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

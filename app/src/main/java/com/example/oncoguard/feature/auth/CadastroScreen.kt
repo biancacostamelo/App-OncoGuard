@@ -1,4 +1,4 @@
-package com.example.oncoguard
+package com.example.oncoguard.feature.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,6 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.oncoguard.core.components.CustomTopAppBar
+import com.example.oncoguard.core.navigation.Screen
 
 @Composable
 fun CadastroScreen(navController: NavController){

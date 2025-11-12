@@ -1,11 +1,24 @@
-package com.example.oncoguard
+package com.example.oncoguard.core.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.oncoguard.TelaONGS
+import com.example.oncoguard.feature.auth.CadastroScreen
+import com.example.oncoguard.feature.auth.LoginScreen
+import com.example.oncoguard.feature.chat.ChatScreen
+import com.example.oncoguard.feature.home.HomeScreen
+import com.example.oncoguard.feature.home.TelaAcolhimento
+import com.example.oncoguard.feature.home.TelaBemEstar
+import com.example.oncoguard.feature.home.TelaDicas
+import com.example.oncoguard.feature.home.TelaEsperanca
+import com.example.oncoguard.feature.inicio.InicioScreen
+import com.example.oncoguard.feature.perfil.ConfigScreen
+import com.example.oncoguard.feature.perfil.EditarPerfilScreen
+import com.example.oncoguard.feature.planos.PlanosScreen
+import com.example.oncoguard.feature.splash.SplashScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
@@ -29,7 +42,7 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         // A função NavHost é responsável por gerenciar a navegação entre as telas
         navController = navController,
-        startDestination = Screen.Planos.route
+        startDestination = Screen.Home.route
     ) {
         composable(Screen.Splash.route) {
             SplashScreen(navController)

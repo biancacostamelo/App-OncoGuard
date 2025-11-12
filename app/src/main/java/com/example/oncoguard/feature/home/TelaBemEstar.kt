@@ -1,17 +1,8 @@
-package com.example.oncoguard
+package com.example.oncoguard.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -29,10 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.oncoguard.core.components.CustomBottomBar
+import com.example.oncoguard.core.components.CustomTopAppBar
+import com.example.oncoguard.R
 
 @Composable
-fun TelaEsperanca(navController: NavController){
-
+fun TelaBemEstar(navController: NavController) {
     Scaffold(
         bottomBar = { CustomBottomBar(navController = navController) },
         topBar = {
@@ -43,8 +36,7 @@ fun TelaEsperanca(navController: NavController){
                 navController = navController
             )
         }
-    )
-    { paddingValues ->
+    ) { paddingValues ->
 
         Column(
             modifier = Modifier
@@ -61,12 +53,14 @@ fun TelaEsperanca(navController: NavController){
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Esperança",
+                    text = "Bem Estar",
                     color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold
                 )
-            }// Conteúdo principal
+            }
+
+            // Conteúdo principal
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -94,20 +88,12 @@ fun TelaEsperanca(navController: NavController){
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.personagem_esperanca), // nome do arquivo da imagem
+                                painter = painterResource(id = R.drawable.personagem_bemestar), // nome do arquivo da imagem
                                 contentDescription = "Personagem meditando",
                                 modifier = Modifier
                                     .size(80.dp)
                                     .padding(end = 8.dp),
                                 contentScale = ContentScale.Fit
-                            )
-
-                            Text(
-                                text = "O Significado Ativo da Esperança",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFB60158),
-                                textAlign = TextAlign.Center
                             )
                         }
 
@@ -115,10 +101,15 @@ fun TelaEsperanca(navController: NavController){
 
                         Text(
                             text = """
-A esperança é a força que floresce mesmo em tempos difíceis.
-Cada mulher que enfrenta o câncer de mama carrega dentro de si 
-uma luz poderosa — a coragem de seguir, acreditar e recomeçar.
-Você não está sozinha. A esperança vive em cada passo, em cada respiro e em cada novo dia.
+O bem-estar é uma parte essencial do processo de recuperação e qualidade de vida. 
+Aqui você encontrará dicas, orientações e práticas para cuidar da mente e do corpo.
+
+• Mantenha uma alimentação equilibrada.  
+• Reserve momentos do dia para relaxar.  
+• Pratique exercícios leves, conforme orientação médica.  
+• Cultive pensamentos positivos e boas relações.  
+
+Lembre-se: cuidar de si mesmo é parte fundamental do tratamento.
                             """.trimIndent(),
                             fontSize = 16.sp,
                             color = Color.DarkGray,

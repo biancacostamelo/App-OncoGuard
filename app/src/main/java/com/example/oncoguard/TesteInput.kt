@@ -1,3 +1,4 @@
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.remember
@@ -24,17 +26,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.TextStyle
 
 @Composable
 fun ChatInputBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(56.dp)
             .background(Color(0xFFB5739E), shape = RoundedCornerShape(50.dp)) // Fundo roxo arredondado
-            .padding(horizontal = 12.dp, vertical = 4.dp),
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         // Ícone da esquerda
         Icon(
@@ -46,13 +49,14 @@ fun ChatInputBar() {
 
         // Campo de texto (input)
         var message by remember { mutableStateOf("") }
-        TextField(
+        OutlinedTextField(
             value = message,
             onValueChange = { message = it },
-            placeholder = { Text("Digite algo...", color = Color.White.copy(alpha = 0.7f)) },
+            textStyle = TextStyle(color = Color(0xFFFFFFFF)),
+            placeholder = { Text("Digite algo...",color = Color(0xFFE3E3E3)) },
             modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 8.dp)
+                .fillMaxWidth(0.7f)
+                //.padding(horizontal = 8.dp)
         )
 
         // Ícone de microfone/desativar som

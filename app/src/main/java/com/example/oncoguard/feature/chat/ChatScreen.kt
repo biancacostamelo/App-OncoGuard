@@ -1,4 +1,4 @@
-package com.example.oncoguard
+package com.example.oncoguard.feature.chat
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.example.oncoguard.core.components.CustomTopAppBar
+import com.example.oncoguard.R
 
 @Composable
 fun ChatScreen(navController: NavController) {
