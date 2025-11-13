@@ -20,6 +20,7 @@ import com.example.oncoguard.feature.home.TelaMedico
 import com.example.oncoguard.feature.inicio.InicioScreen
 import com.example.oncoguard.feature.perfil.ConfigScreen
 import com.example.oncoguard.feature.perfil.EditarPerfilScreen
+import com.example.oncoguard.feature.planos.PlanoDiamante
 import com.example.oncoguard.feature.planos.PlanosScreen
 import com.example.oncoguard.feature.splash.SplashScreen
 
@@ -41,6 +42,7 @@ sealed class Screen(val route: String) {
     object  TelaMedico : Screen("TelaMedico")
     object  TelaCalendario : Screen("TelaCalendario")
     object  TelaComunidade : Screen("TelaComunidade")
+    object  PlanoDiamante : Screen("PlanoDiamante")
 }
 
 @Composable
@@ -48,7 +50,7 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         // A função NavHost é responsável por gerenciar a navegação entre as telas
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.PlanoDiamante.route
     ) {
         composable(Screen.Splash.route) {
             SplashScreen(navController)
@@ -100,6 +102,9 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         }
         composable (Screen.TelaComunidade.route){
             TelaComunidade(navController)
+        }
+        composable (Screen.PlanoDiamante.route){
+            PlanoDiamante(navController)
         }
     }
 }

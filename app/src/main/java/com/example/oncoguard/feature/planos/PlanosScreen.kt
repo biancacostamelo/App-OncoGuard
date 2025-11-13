@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.oncoguard.core.components.CustomBottomBar2
 import com.example.oncoguard.R
+import com.example.oncoguard.core.navigation.Screen
 
 @Composable
 fun PlanosScreen(navController: NavController) {
@@ -96,11 +97,11 @@ fun PlanosScreen(navController: NavController) {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = { navController.navigate(Screen.PlanoDiamante.route) },
                         modifier = Modifier
                             .width(184.dp),
                         shape = RoundedCornerShape(60.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158)),
                     ) {
                         Text(
                             text = "Obter Diamante",
