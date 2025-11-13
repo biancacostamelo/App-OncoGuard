@@ -6,9 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
+import com.example.oncoguard.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,10 +21,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.example.oncoguard.core.components.CustomTopAppBar
-import com.example.oncoguard.R
+
 
 @Composable
 fun TelaBemEstar(navController: NavController) {
+
     Scaffold(
         bottomBar = { CustomBottomBar(navController = navController) },
         topBar = {
@@ -53,7 +53,7 @@ fun TelaBemEstar(navController: NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Bem Estar",
+                    text = "Bem-Estar",
                     color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold
@@ -81,41 +81,83 @@ fun TelaBemEstar(navController: NavController) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Top
                     ) {
-                        // 🧘 Imagem e título lado a lado
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.personagem_bemestar), // nome do arquivo da imagem
-                                contentDescription = "Personagem meditando",
+                                painter = painterResource(id = R.drawable.personagem_acolhimento),
+                                contentDescription = "Personagem bem-estar",
                                 modifier = Modifier
                                     .size(80.dp)
                                     .padding(end = 8.dp),
                                 contentScale = ContentScale.Fit
                             )
+
+                            Text(
+                                text = "Cuidar de si é um gesto de amor e coragem!",
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFB60158),
+                                textAlign = TextAlign.Center
+                            )
                         }
+
+                        Text(
+                            text = "Honre seus sentimentos e seja paciente consigo mesmo",
+                            fontSize = 14.sp,
+                            color = Color(0xFFB60158),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
 
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
+                            text = "Mas como?",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFFB60158),
+                            textAlign = TextAlign.Justify
+                        )
+
+                        Text(
                             text = """
-O bem-estar é uma parte essencial do processo de recuperação e qualidade de vida. 
-Aqui você encontrará dicas, orientações e práticas para cuidar da mente e do corpo.
-
-• Mantenha uma alimentação equilibrada.  
-• Reserve momentos do dia para relaxar.  
-• Pratique exercícios leves, conforme orientação médica.  
-• Cultive pensamentos positivos e boas relações.  
-
-Lembre-se: cuidar de si mesmo é parte fundamental do tratamento.
+                           O bem-estar começa nos pequenos detalhes em uma boa noite de sono, em 
+                           um passeio leve, em uma conversa que acalma o coração.
+                           Seu corpo e sua mente merecem atenção, carinho e descanso.
+                           Lembre-se: cuidar da saúde é também cuidar da vida que pulsa dentro de você. 
+                          
+                          Quer se sentir ainda melhor? Clique abaixo e descubra nossos médicos prontos 
+                          para cuidar de você!
                             """.trimIndent(),
                             fontSize = 16.sp,
                             color = Color.DarkGray,
                             textAlign = TextAlign.Justify,
-                            lineHeight = 22.sp
+                            lineHeight = 22.sp,
+                            modifier = Modifier.padding(top = 8.dp)
                         )
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Button(
+                            onClick = { navController.navigate("TelaMedico") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB60158),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            modifier = Modifier
+                                .fillMaxWidth(0.7f)
+                                .height(50.dp)
+                        ) {
+                            Text(
+                                text = "Ver mais",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }

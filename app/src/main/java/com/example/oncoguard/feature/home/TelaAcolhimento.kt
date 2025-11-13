@@ -18,9 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.oncoguard.R
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.example.oncoguard.core.components.CustomTopAppBar
-import com.example.oncoguard.R
 
 @Composable
 fun TelaAcolhimento(navController: NavController) {
@@ -136,9 +136,8 @@ fun TelaAcolhimento(navController: NavController) {
                         Spacer(modifier = Modifier.height(24.dp))
 
                         // ✅ Botão dentro da tela
-                        // TELA DICA até fizer a tela de comunidade
                         Button(
-                            onClick = { navController.navigate("TelaDicas") },
+                            onClick = { navController.navigate("TelaComunidade") },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFB60158),
                                 contentColor = Color.White

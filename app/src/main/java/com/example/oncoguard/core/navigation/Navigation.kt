@@ -12,8 +12,11 @@ import com.example.oncoguard.feature.chat.ChatScreen
 import com.example.oncoguard.feature.home.HomeScreen
 import com.example.oncoguard.feature.home.TelaAcolhimento
 import com.example.oncoguard.feature.home.TelaBemEstar
+import com.example.oncoguard.feature.home.TelaCalendario
+import com.example.oncoguard.feature.home.TelaComunidade
 import com.example.oncoguard.feature.home.TelaDicas
 import com.example.oncoguard.feature.home.TelaEsperanca
+import com.example.oncoguard.feature.home.TelaMedico
 import com.example.oncoguard.feature.inicio.InicioScreen
 import com.example.oncoguard.feature.perfil.ConfigScreen
 import com.example.oncoguard.feature.perfil.EditarPerfilScreen
@@ -35,6 +38,9 @@ sealed class Screen(val route: String) {
     object  TelaAcolhimento : Screen("TelaAcolhimento")
     object  TelaEsperanca : Screen("TelaEsperanca")
     object  TelaONGS : Screen("TelaONGS")
+    object  TelaMedico : Screen("TelaMedico")
+    object  TelaCalendario : Screen("TelaCalendario")
+    object  TelaComunidade : Screen("TelaComunidade")
 }
 
 @Composable
@@ -86,6 +92,14 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         composable (Screen.TelaONGS.route){
             TelaONGS(navController)
         }
-
+        composable (Screen.TelaMedico.route){
+            TelaMedico(navController)
+        }
+        composable (Screen.TelaCalendario.route){
+            TelaCalendario(navController)
+        }
+        composable (Screen.TelaComunidade.route){
+            TelaComunidade(navController)
+        }
     }
 }
