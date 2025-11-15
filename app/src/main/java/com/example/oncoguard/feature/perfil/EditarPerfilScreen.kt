@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
@@ -43,6 +45,7 @@ import androidx.navigation.NavController
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.example.oncoguard.core.components.CustomTopAppBar
 import com.example.oncoguard.R
+import com.example.oncoguard.core.components.CustomBottomBar2
 import com.example.oncoguard.core.navigation.Screen
 
 @Composable
@@ -52,36 +55,24 @@ fun EditarPerfilScreen(navController: NavController){
         contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
             CustomTopAppBar(
-                title = "Voltar",
+                title = "Editar Perfil",
                 navigationIcon = Icons.Default.Info,
                 showBackButton = true,
                 navController = navController
             )
         }
     ) { paddingValues ->
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-            .consumeWindowInsets(paddingValues),
+
+                .verticalScroll(scrollState)
+                .consumeWindowInsets(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp)
-                    .background(Color(0xFF54A1E0)),
-                contentAlignment = Alignment.Center
-            )
-            {
-                Text(
-                    text = "Editar perfil",
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
             Box( modifier = Modifier
                 .clip(RoundedCornerShape(bottomEnd = 100.dp, bottomStart = 100.dp))
                 .width(214.dp)
@@ -117,7 +108,7 @@ fun EditarPerfilScreen(navController: NavController){
             Column(
                 modifier = Modifier
                     .padding(horizontal = 40.dp)
-                    .padding(top = 40.dp),
+                    .padding(top = 40.dp, bottom = 40.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {

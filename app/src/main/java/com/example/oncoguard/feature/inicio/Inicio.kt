@@ -83,7 +83,7 @@ fun InicioScreen(navController: NavController) {
                     .height(48.dp),
                 shape = RoundedCornerShape(60.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
-            ) { Text("Entrar" , color = Color(0xFFFFFFFF), fontWeight = FontWeight.Bold) }
+            ) { Text("Entrar" , color = Color(0xFFFFFFFF), fontWeight = FontWeight.Bold, fontSize = 20.sp) }
 
             Spacer(modifier = Modifier.height(14.dp))
 
@@ -95,7 +95,7 @@ fun InicioScreen(navController: NavController) {
                     .border(1.dp, Color(0xFFB60158), shape = RoundedCornerShape(60.dp)), // 👈 Borda adicionada
                 shape = RoundedCornerShape(60.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFDAF3))
-            ) { Text("Criar Conta" , color = Color(0xFFB60158), fontWeight = FontWeight.Bold) }
+            ) { Text("Criar Conta" , color = Color(0xFFB60158), fontWeight = FontWeight.Bold, fontSize = 20.sp) }
         }
 
 

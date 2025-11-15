@@ -13,9 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -77,8 +79,7 @@ fun TelaBemEstar(navController: NavController) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                            .padding(33.dp),
                         verticalArrangement = Arrangement.Top
                     ) {
                         Row(
@@ -87,12 +88,12 @@ fun TelaBemEstar(navController: NavController) {
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.personagem_acolhimento),
+                                painter = painterResource(id = R.drawable.personagem_bemestar2),
                                 contentDescription = "Personagem bem-estar",
                                 modifier = Modifier
-                                    .size(80.dp)
-                                    .padding(end = 8.dp),
-                                contentScale = ContentScale.Fit
+                                    .height(153.dp)
+                                    .width(91.dp)
+                                    .padding(end = 12.dp),
                             )
 
                             Text(
@@ -100,7 +101,6 @@ fun TelaBemEstar(navController: NavController) {
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFFB60158),
-                                textAlign = TextAlign.Center
                             )
                         }
 
@@ -108,7 +108,6 @@ fun TelaBemEstar(navController: NavController) {
                             text = "Honre seus sentimentos e seja paciente consigo mesmo",
                             fontSize = 14.sp,
                             color = Color(0xFFB60158),
-                            textAlign = TextAlign.Center,
                             modifier = Modifier.padding(top = 8.dp)
                         )
 
@@ -119,7 +118,6 @@ fun TelaBemEstar(navController: NavController) {
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFB60158),
-                            textAlign = TextAlign.Justify
                         )
 
                         Text(
@@ -134,7 +132,6 @@ fun TelaBemEstar(navController: NavController) {
                             """.trimIndent(),
                             fontSize = 16.sp,
                             color = Color.DarkGray,
-                            textAlign = TextAlign.Justify,
                             lineHeight = 22.sp,
                             modifier = Modifier.padding(top = 8.dp)
                         )
@@ -149,7 +146,7 @@ fun TelaBemEstar(navController: NavController) {
                             ),
                             shape = RoundedCornerShape(30.dp),
                             modifier = Modifier
-                                .fillMaxWidth(0.7f)
+                                .fillMaxWidth()
                                 .height(50.dp)
                         ) {
                             Text(
@@ -163,4 +160,12 @@ fun TelaBemEstar(navController: NavController) {
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BemPreview() {
+    TelaBemEstar(
+        navController = NavController(LocalContext.current) // TODO()
+    )
 }

@@ -2,10 +2,13 @@ package com.example.oncoguard.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.handwriting.handwritingDetector
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Close
@@ -14,6 +17,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -41,7 +46,7 @@ fun HomeScreen(navController: NavController) {
 
     // Lista de opções com título, imagem e descrição
     val allOptions = listOf(
-        ButtonData("Dicas", R.drawable.personagem_acolhimento, "Dicas para o dia a dia."),
+        ButtonData("Dicas", R.drawable.personagem_dica, "Dicas para o dia a dia."),
         ButtonData("Acolhimento", R.drawable.personagem_acolhimento, "Espaço para apoio e empatia."),
         ButtonData("Esperança", R.drawable.personagem_esperanca, "Mensagens inspiradoras."),
         ButtonData("Bem Estar", R.drawable.personagem_bemestar, "Cuide da mente e do corpo."),
@@ -61,19 +66,21 @@ fun HomeScreen(navController: NavController) {
     }
 
     Scaffold(
-        bottomBar = { CustomBottomBar(navController = navController) },
+        bottomBar = { CustomBottomBar(navController) },
+        contentWindowInsets = WindowInsets.systemBars, // protege topo + nav bar
         containerColor = Color.Transparent,
-        contentWindowInsets = WindowInsets.safeDrawing
-    ) { paddingValues ->
-
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        // importante: aplicar innerPadding para não sobrepor status bar
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .background(Color(0xFFFFDAF3))
+                .padding(innerPadding) // <- ESSENCIAL para proteger topo e fundo
+                .background(Color(0xFFFEFDF9)) // seu rosa de fundo (exemplo)
         ) {
             Box(
                 modifier = Modifier
+
                     .fillMaxWidth()
                     .background(Color.Transparent)
                     .padding(horizontal = 16.dp, vertical = 10.dp)
@@ -88,7 +95,7 @@ fun HomeScreen(navController: NavController) {
                             Icons.Filled.AccountCircle,
                             contentDescription = "Perfil",
                             modifier = Modifier.size(50.dp),
-                            tint = Color(0xFF0D6EFD)
+                            tint =  Color(0xffB60158),
                         )
                     }
 
@@ -96,7 +103,7 @@ fun HomeScreen(navController: NavController) {
 
                     Text(
                         text = "Olá, Alice!",
-                        color = Color.Black,
+                        color = Color(0xffB60158),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Medium
                     )
@@ -117,7 +124,7 @@ fun HomeScreen(navController: NavController) {
                             imageVector = if (showSearchBar) Icons.Filled.Close else Icons.Filled.Search,
                             contentDescription = "Pesquisar",
                             modifier = Modifier.size(34.dp),
-                            tint = Color(0xFF0D6EFD)
+                            tint =  Color(0xffB60158)
                         )
                     }
                 }
@@ -152,17 +159,17 @@ fun HomeScreen(navController: NavController) {
                     .padding(vertical = 16.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Divider(modifier = Modifier.weight(1f), color = Color.Black, thickness = 1.dp)
+                Divider(modifier = Modifier.weight(1f),  color = Color(0xffB60158), thickness = 1.dp)
 
                 Text(
                     text = "Bem-Vinda(o)!",
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    color = Color.Black,
-                    fontSize = 20.sp,
+                    color = Color(0xffB60158),
+                    fontSize = 32.sp,
                     fontWeight = FontWeight.Medium
                 )
 
-                Divider(modifier = Modifier.weight(1f), color = Color.Black, thickness = 1.dp)
+                Divider(modifier = Modifier.weight(1f),  color = Color(0xffB60158), thickness = 1.dp)
             }
 
             val itemsToDisplay = if (showSearchBar && isSearching) searchResults else allOptions
@@ -217,50 +224,57 @@ fun ButtonItemWithImage(
     text: String,
     imageRes: Int,
     description: String,
-    onClick: () -> Unit
+    onClick: () -> Unit = {}
 ) {
-    Button(
-        onClick = onClick,
+    Column(
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .height(130.dp),
-        shape = RoundedCornerShape(20.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+            .height(265.dp)
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(20.dp),
+                clip = false, // deixa a sombra aparecer para fora
+                ambientColor = Color(0xFF42031E), // sombra suave
+                spotColor = Color(0xFF42031E),
+
+            )
+            .background(Color.White, RoundedCornerShape(20.dp))
+            .clickable { onClick() } // se quiser clique
+            .padding(bottom = 8.dp)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.fillMaxWidth()
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = text,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(176.dp)
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+        )
+
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
+                .fillMaxHeight()
         ) {
-            Image(
-                painter = painterResource(id = imageRes),
-                contentDescription = text,
-                modifier = Modifier
-                    .size(100.dp)
-                    .padding(end = 12.dp)
+            Text(
+                text = text,
+                color = Color(0xffB60158),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
             )
 
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = text,
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = description,
-                    color = Color(0xFFFFE4F2),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
+            Text(
+                text = description,
+                color = Color(0xff595959),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal
+            )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

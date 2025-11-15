@@ -12,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -30,14 +32,8 @@ fun TelaDicas(navController: NavController) {
         Dica(
             titulo = "Dieta equilibrada",
             subtitulo = "Sabia que após o câncer de mama,\nprecisa fazer uma dietinha?",
-            conteudo = """
-                Aumente o consumo desses alimentos:
-
-                • Frutas, Legumes e Verduras: Pelo menos 2 xícaras por dia, priorizando a variedade e cores diferentes. 
-                • Cereais integrais: Como arroz integral, pães e massas integrais, aveia e quinoa.
-                • Leguminosas, Sementes e Nozes: Feijões, lentilha, grão de bico, castanhas e sementes (linhaça, chia).
-            """.trimIndent(),
-            imagem = R.drawable.personagem_dica
+            conteudo = "Aumente o consumo desses alimentos Frutas, Legumes e Verduras: Pelo menos 2​ xícaras por dia, priorizando a variedade e cores diferentes. São fontes de vitaminas, minerais e antioxidantes. \nCereais Integrais:  Como arroz integral, pães e massas integrais, aveia e quinoa. Leguminosas, Sementes e Nozes: Feijões, lentilha, grão de bico, castanhas e sementes (linhaça, chia).",
+            imagem = R.drawable.personagem_dica2
         ),
         Dica(
             titulo = "Atividade física",
@@ -136,7 +132,7 @@ fun TelaDicas(navController: NavController) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(20.dp),
+                            .padding(33.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Spacer(modifier = Modifier.height(10.dp))
@@ -144,7 +140,6 @@ fun TelaDicas(navController: NavController) {
                         // 🔹 Cabeçalho com imagem + título
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Crossfade(targetState = dica) { dicaAtual ->
@@ -152,28 +147,25 @@ fun TelaDicas(navController: NavController) {
                                     painter = painterResource(id = dicaAtual.imagem),
                                     contentDescription = "Personagem",
                                     modifier = Modifier
-                                        .height(100.dp)
+                                        .height(153.dp)
+                                        .width(91.dp)
                                         .padding(end = 12.dp)
                                 )
                             }
 
                             Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxWidth(0.7f)
+                                modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(
                                     text = dica.titulo,
                                     color = Color(0xFFB60158),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 26.sp,
-                                    textAlign = TextAlign.Center
                                 )
                                 Text(
                                     text = dica.subtitulo,
                                     fontSize = 14.sp,
                                     color = Color(0xFFB60158),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier.fillMaxWidth()
                                 )
                             }
                         }
@@ -193,7 +185,6 @@ fun TelaDicas(navController: NavController) {
                                 color = Color(0xFFB60158),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp,
-                                textAlign = TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth()
                             )
 
@@ -203,8 +194,8 @@ fun TelaDicas(navController: NavController) {
                                 text = dica.conteudo,
                                 fontSize = 15.sp,
                                 color = Color.Black,
-                                textAlign = TextAlign.Justify,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
+                                lineHeight = 30.sp
                             )
                         }
 
@@ -243,3 +234,9 @@ data class Dica(
     val conteudo: String,
     val imagem: Int
 )
+
+@Preview(showBackground = true)
+@Composable
+fun DicasPreview() {
+    TelaDicas(navController = NavController(LocalContext.current))
+}

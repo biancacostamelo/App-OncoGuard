@@ -149,7 +149,7 @@ fun ConfigScreen(navController: NavController) {
                             Button(
                                 onClick = { navController.navigate(Screen.Planos.route) },
                                 modifier = Modifier
-                                    .fillMaxWidth(fraction = 0.8f)
+                                    .fillMaxWidth(fraction = 0.9f)
                                     .height(40.dp),
                                 shape = RoundedCornerShape(60.dp),
                                 colors = ButtonDefaults.buttonColors(
@@ -161,7 +161,7 @@ fun ConfigScreen(navController: NavController) {
                                 Text(
                                     text = "Assinar planos",
                                     color = Color.White,
-                                    fontSize = 13.sp,
+                                    fontSize = 16.sp,
                                     fontWeight = FontWeight.Medium
                                 )
                             }

@@ -12,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -129,8 +131,7 @@ fun TelaEsperanca(navController: NavController) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .padding(33.dp),
                     ) {
                         Spacer(modifier = Modifier.height(10.dp))
 
@@ -144,27 +145,25 @@ fun TelaEsperanca(navController: NavController) {
                                     painter = painterResource(id = dicaAtual.imagem),
                                     contentDescription = "Personagem",
                                     modifier = Modifier
-                                        .height(100.dp)
+                                        .height(153.dp)
+                                        .width(91.dp)
                                         .padding(end = 12.dp)
                                 )
                             }
 
                             Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxWidth(0.7f)
+                                modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(
                                     text = esperanca.titulo,
                                     color = Color(0xFFB60158),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 26.sp,
-                                    textAlign = TextAlign.Center
                                 )
                                 Text(
                                     text = esperanca.subtitulo,
                                     fontSize = 14.sp,
                                     color = Color(0xFFB60158),
-                                    textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth()
                                 )
                             }
@@ -174,8 +173,7 @@ fun TelaEsperanca(navController: NavController) {
                         Column(
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
+                                .fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
@@ -183,7 +181,6 @@ fun TelaEsperanca(navController: NavController) {
                                 color = Color(0xFFB60158),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 20.sp,
-                                textAlign = TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth()
                             )
 
@@ -193,7 +190,6 @@ fun TelaEsperanca(navController: NavController) {
                                 text = esperanca.conteudo,
                                 fontSize = 15.sp,
                                 color = Color.Black,
-                                textAlign = TextAlign.Justify,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -209,7 +205,7 @@ fun TelaEsperanca(navController: NavController) {
                             shape = RoundedCornerShape(30.dp),
                             modifier = Modifier
                                 .padding(top = 24.dp, bottom = 16.dp)
-                                .fillMaxWidth(0.7f)
+                                .fillMaxWidth()
                                 .height(50.dp)
                         ) {
                             Text(
@@ -232,3 +228,12 @@ data class Esperanca(
     val conteudo: String,
     val imagem: Int
 )
+
+
+@Preview(showBackground = true)
+@Composable
+fun EsperancaPreview() {
+    TelaEsperanca(
+        navController = NavController(LocalContext.current) // TODO()
+    )
+}

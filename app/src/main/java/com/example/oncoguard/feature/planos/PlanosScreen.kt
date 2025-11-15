@@ -50,15 +50,18 @@ fun PlanosScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Column( horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 40.dp)) {
-                
-            Text("PLANOS", color = Color.White, fontSize = 36.sp, fontWeight = FontWeight.Bold)
-            Text(
-                "Navegue sem limites!",
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(top = 40.dp)
+            ) {
+
+                Text("PLANOS", color = Color.White, fontSize = 36.sp, fontWeight = FontWeight.Bold)
+                Text(
+                    "Navegue sem limites!",
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
             }
 
             Row(
@@ -72,14 +75,14 @@ fun PlanosScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
-                Column{
+                Column {
                     Text(
                         "Diamante",
                         color = Color(0xFFB60158),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Row(  verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             "R\$ 230,00",
                             color = Color(0x78B60158),
@@ -106,11 +109,11 @@ fun PlanosScreen(navController: NavController) {
                         Text(
                             text = "Obter Diamante",
                             color = Color.White,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium, fontSize = 16.sp
                         )
                     }
                 }
-                Column (modifier = Modifier.padding(start = 30.dp)){
+                Column(modifier = Modifier.padding(start = 30.dp)) {
                     Image(
                         painter = painterResource(R.drawable.planosdiamante),
                         contentDescription = "plano diamante",
@@ -132,7 +135,7 @@ fun PlanosScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
-                Column{
+                Column {
                     Text(
                         "Ouro",
                         color = Color(0xFFB60158),
@@ -157,7 +160,7 @@ fun PlanosScreen(navController: NavController) {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = { navController.navigate(Screen.PlanoOuro.route) },
                         modifier = Modifier
                             .width(184.dp),
                         shape = RoundedCornerShape(60.dp),
@@ -166,11 +169,11 @@ fun PlanosScreen(navController: NavController) {
                         Text(
                             text = "Obter Ouro",
                             color = Color.White,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium, fontSize = 16.sp
                         )
                     }
                 }
-                Column (modifier = Modifier.padding(start = 30.dp)){
+                Column(modifier = Modifier.padding(start = 30.dp)) {
                     Image(
                         painter = painterResource(R.drawable.planosouro),
                         contentDescription = "plano diamante",
@@ -192,14 +195,14 @@ fun PlanosScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
-                Column{
+                Column {
                     Text(
                         "Prata",
                         color = Color(0xFFB60158),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Row(  verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             "R\$ 0,00",
                             color = Color(0x78B60158),
@@ -217,7 +220,7 @@ fun PlanosScreen(navController: NavController) {
                         )
                     }
                     Button(
-                        onClick = {},
+                        onClick = { navController.navigate(Screen.PlanoPrata.route) },
                         modifier = Modifier
                             .width(184.dp),
                         shape = RoundedCornerShape(60.dp),
@@ -226,11 +229,11 @@ fun PlanosScreen(navController: NavController) {
                         Text(
                             text = "Plano atual",
                             color = Color.White,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium, fontSize = 16.sp
                         )
                     }
                 }
-                Column (modifier = Modifier.padding(start = 30.dp)){
+                Column(modifier = Modifier.padding(start = 30.dp)) {
                     Image(
                         painter = painterResource(R.drawable.planosprata),
                         contentDescription = "plano diamante",
