@@ -3,7 +3,9 @@ package com.example.oncoguard.feature.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
@@ -39,11 +41,12 @@ fun TelaBemEstar(navController: NavController) {
             )
         }
     ) { paddingValues ->
-
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(scrollState)
         ) {
 
             // Barra azul superior
@@ -96,26 +99,30 @@ fun TelaBemEstar(navController: NavController) {
                                     .padding(end = 12.dp),
                             )
 
-                            Text(
-                                text = "Cuidar de si é um gesto de amor e coragem!",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFB60158),
-                            )
+                            Column {
+                                Text(
+                                    text = "Cuidar de si é um gesto de amor e coragem!",
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFFB60158),
+                                )
+
+                                Text(
+                                    text = "Honre seus sentimentos e seja paciente consigo mesmo",
+                                    fontSize = 14.sp,
+                                    color = Color(0xFFB60158),
+                                    modifier = Modifier.padding(top = 8.dp)
+                                )
+                            }
                         }
 
-                        Text(
-                            text = "Honre seus sentimentos e seja paciente consigo mesmo",
-                            fontSize = 14.sp,
-                            color = Color(0xFFB60158),
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
+
 
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
                             text = "Mas como?",
-                            fontSize = 24.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFB60158),
                         )
@@ -132,7 +139,7 @@ fun TelaBemEstar(navController: NavController) {
                             """.trimIndent(),
                             fontSize = 16.sp,
                             color = Color.DarkGray,
-                            lineHeight = 22.sp,
+                            lineHeight = 24.sp,
                             modifier = Modifier.padding(top = 8.dp)
                         )
 

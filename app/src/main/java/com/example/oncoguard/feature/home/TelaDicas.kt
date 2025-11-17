@@ -4,7 +4,9 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
@@ -15,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -93,11 +94,12 @@ fun TelaDicas(navController: NavController) {
             )
         }
     ) { paddingValues ->
-
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(scrollState)
         ) {
             // 🔹 Barra superior colorida
             Box(
@@ -129,89 +131,85 @@ fun TelaDicas(navController: NavController) {
                         .fillMaxSize()
                         .padding(top = 20.dp)
                 ) {
+
+                    val scrollState = rememberScrollState()
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            //.verticalScroll(scrollState)
                             .padding(33.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
                         Spacer(modifier = Modifier.height(10.dp))
-
-                        // 🔹 Cabeçalho com imagem + título
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
+                        Row ( verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Crossfade(targetState = dica) { dicaAtual ->
-                                Image(
-                                    painter = painterResource(id = dicaAtual.imagem),
-                                    contentDescription = "Personagem",
-                                    modifier = Modifier
-                                        .height(153.dp)
-                                        .width(91.dp)
-                                        .padding(end = 12.dp)
-                                )
-                            }
+                        ){
 
-                            Column(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
+                            // 🔹 Imagem (agora dentro do scroll)
+                            Image(
+                                painter = painterResource(id = dica.imagem),
+                                contentDescription = "Personagem",
+                                modifier = Modifier
+                                    .height(153.dp)
+                                    .width(91.dp)
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Column( modifier = Modifier.fillMaxWidth()) {
+                                // 🔹 Título e subtítulo (também dentro do scroll)
                                 Text(
                                     text = dica.titulo,
                                     color = Color(0xFFB60158),
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 26.sp,
+                                    modifier = Modifier.fillMaxWidth()
                                 )
+
                                 Text(
                                     text = dica.subtitulo,
                                     fontSize = 14.sp,
                                     color = Color(0xFFB60158),
+                                    modifier = Modifier.fillMaxWidth()
                                 )
                             }
+
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(25.dp))
 
-                        // 🔹 Texto principal fixo (usa weight para não mexer)
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "Aqui vai uma dica pra você:",
-                                color = Color(0xFFB60158),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                        // 🔹 Texto principal
+                        Text(
+                            text = "Aqui vai uma dica pra você:",
+                            color = Color(0xFFB60158),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                            Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(
-                                text = dica.conteudo,
-                                fontSize = 15.sp,
-                                color = Color.Black,
-                                modifier = Modifier.fillMaxWidth(),
-                                lineHeight = 30.sp
-                            )
-                        }
+                        Text(
+                            text = dica.conteudo,
+                            //fontSize = 15.sp,
+                            color = Color.DarkGray,
+                            lineHeight = 24.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                        // 🔹 Botão fixo no final
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        // 🔹 Botão para trocar dica
                         Button(
-                            onClick = {
-                                dicaAtual = (dicaAtual + 1) % dicas.size
-                            },
+                            onClick = { dicaAtual = (dicaAtual + 1) % dicas.size },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFB60158),
                                 contentColor = Color.White
                             ),
                             shape = RoundedCornerShape(30.dp),
                             modifier = Modifier
-                                .padding(top = 24.dp, bottom = 16.dp)
-                                .fillMaxWidth(0.7f)
+                                .fillMaxWidth()
                                 .height(50.dp)
                         ) {
                             Text(
@@ -220,8 +218,11 @@ fun TelaDicas(navController: NavController) {
                                 fontWeight = FontWeight.Bold
                             )
                         }
+
+                        Spacer(modifier = Modifier.height(50.dp))
                     }
                 }
+
             }
         }
     }

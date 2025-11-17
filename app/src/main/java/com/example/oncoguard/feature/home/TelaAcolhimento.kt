@@ -3,7 +3,9 @@ package com.example.oncoguard.feature.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
@@ -38,10 +40,11 @@ fun TelaAcolhimento(navController: NavController) {
             )
         }
     ) { paddingValues ->
-
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(paddingValues)
         ) {
 
@@ -78,7 +81,8 @@ fun TelaAcolhimento(navController: NavController) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(24.dp),
+                            .padding(24.dp)
+                            .padding(bottom = 20.dp),
                         verticalArrangement = Arrangement.Top
                     ) {
                         // 🧘 Imagem e título lado a lado
@@ -117,7 +121,7 @@ fun TelaAcolhimento(navController: NavController) {
 
                         Text(
                             text = "Mas como?",
-                            fontSize = 24.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFFB60158),
                         )
@@ -126,9 +130,9 @@ fun TelaAcolhimento(navController: NavController) {
                             text = """
                            Pensando na sua luta diária, criamos uma comunidade para criar novas amizades.
                             """.trimIndent(),
-                            fontSize = 16.sp,
+                           // fontSize = 16.sp,
                             color = Color.DarkGray,
-                            lineHeight = 22.sp,
+                            lineHeight = 24.sp,
                             modifier = Modifier.padding(top = 8.dp)
                         )
 

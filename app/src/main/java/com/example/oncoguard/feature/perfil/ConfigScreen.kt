@@ -1,5 +1,6 @@
 package com.example.oncoguard.feature.perfil
 
+import android.R.attr.onClick
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +21,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
@@ -70,12 +74,14 @@ fun ConfigScreen(navController: NavController) {
             )
         }
     ) { paddingValues ->
-
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(scrollState)
                 .consumeWindowInsets(paddingValues)
+                .background(Color(0xFFFEFDF9))
         ) {
             Box(
                 modifier = Modifier
@@ -118,17 +124,17 @@ fun ConfigScreen(navController: NavController) {
                             contentDescription = "Avatar",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .size(90.dp)
+                                .fillMaxWidth(0.3f) // 30% da largura da Row
+                                .aspectRatio(1f)    // deixa a imagem quadrada
                                 .clip(CircleShape)
                         )
+
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.SpaceEvenly
                         ) {
                             Row(
-                                modifier = Modifier,
+                                modifier = Modifier
+                                    .clickable { navController.navigate(Screen.EditarPerfil.route) },
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
@@ -149,8 +155,7 @@ fun ConfigScreen(navController: NavController) {
                             Button(
                                 onClick = { navController.navigate(Screen.Planos.route) },
                                 modifier = Modifier
-                                    .fillMaxWidth(fraction = 0.9f)
-                                    .height(40.dp),
+                                    .fillMaxWidth(fraction = 0.9f),
                                 shape = RoundedCornerShape(60.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color(
@@ -161,7 +166,6 @@ fun ConfigScreen(navController: NavController) {
                                 Text(
                                     text = "Assinar planos",
                                     color = Color.White,
-                                    fontSize = 16.sp,
                                     fontWeight = FontWeight.Medium
                                 )
                             }
@@ -180,43 +184,42 @@ fun ConfigScreen(navController: NavController) {
                 Column() {
 
                     //Button(onClick = {}) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(20.dp))
-                                .drawBehind {
-                                    val strokeWidth = 1.dp.toPx()
-                                    val y = size.height - strokeWidth / 2
-                                    drawLine(
-                                        color = Color(0xFFB60158),
-                                        start = Offset(0f, y),
-                                        end = Offset(size.width, y),
-                                        strokeWidth = strokeWidth
-                                    )
-                                }
-                                .padding(vertical = 10.dp)
-                            /* .background(backgroundColor)
-                             .clickable {
-                                 isClicked = !isClicked
-                             }*/
-                            ,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            IconButton(onClick = {  }) {
-                                Icon(
-                                    Icons.Filled.Edit,
-                                    "Localized description",
-                                    tint = Color(0xFFB60158)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(20.dp))
+                            .drawBehind {
+                                val strokeWidth = 1.dp.toPx()
+                                val y = size.height - strokeWidth / 2
+                                drawLine(
+                                    color = Color(0xFFB60158),
+                                    start = Offset(0f, y),
+                                    end = Offset(size.width, y),
+                                    strokeWidth = strokeWidth
                                 )
                             }
-                            Text(
-                                text = "Notificações",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color(color = 0xFFB60158)
+                            .padding(vertical = 10.dp)
+                        /* .background(backgroundColor)
+                         .clickable {
+                             isClicked = !isClicked
+                         }*/,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(onClick = { }) {
+                            Icon(
+                                Icons.Filled.Edit,
+                                "Localized description",
+                                tint = Color(0xFFB60158)
                             )
                         }
-                   // }
+                        Text(
+                            text = "Notificações",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(color = 0xFFB60158)
+                        )
+                    }
+                    // }
 
 
                     Row(
@@ -351,7 +354,6 @@ fun ConfigScreen(navController: NavController) {
                             color = Color(color = 0xFFB60158)
                         )
                     }
-
 
 
                 }

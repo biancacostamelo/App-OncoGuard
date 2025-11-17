@@ -3,6 +3,7 @@ package com.example.oncoguard.feature.inicio
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,7 +40,7 @@ fun InicioScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFFDAF3))
-            .padding(horizontal = 41.dp),
+            .padding(horizontal = 31.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -46,13 +49,15 @@ fun InicioScreen(navController: NavController) {
                 text = "Bem-Vinda(o)!",
                 color = Color(0xFFB60158),
                 fontSize = 36.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             )
             Text(
                 text = "Estamos aqui para caminhar com você.",
                 color = Color(0xFFB60158),
                 fontSize = 15.sp,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Center
             )
         }
 
@@ -62,19 +67,18 @@ fun InicioScreen(navController: NavController) {
             text = "Faça seu login ou cadastre-se.",
             color = Color(0xFFB60158),
             fontSize = 18.sp,
-            fontWeight = FontWeight.Medium
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.height(34.dp))
+        Image(
+            painter = painterResource(R.drawable.aliciatelainicio__2_),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth, // ajusta a largura e mantém a proporção
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Image(
-            painter = painterResource(R.drawable.aliciatelainicio),
-            contentDescription = "alicia tela inicio",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .height(406.dp)
-                .graphicsLayer(
-                    scaleX = -1f
-                )
-        )
+        Spacer(modifier = Modifier.height(34.dp))
         Column {
             Button(
                 onClick = { navController.navigate(Screen.Login.route) },
@@ -83,19 +87,18 @@ fun InicioScreen(navController: NavController) {
                     .height(48.dp),
                 shape = RoundedCornerShape(60.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
-            ) { Text("Entrar" , color = Color(0xFFFFFFFF), fontWeight = FontWeight.Bold, fontSize = 20.sp) }
+            ) { Text("Entrar" , color = Color(0xFFFFFFFF), fontWeight = FontWeight.Bold, fontSize = 18.sp) }
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(
                 onClick = { navController.navigate(Screen.Cadastro.route) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp)
-                    .border(1.dp, Color(0xFFB60158), shape = RoundedCornerShape(60.dp)), // 👈 Borda adicionada
-                shape = RoundedCornerShape(60.dp),
+                  .height(48.dp)
+                    .border(1.dp, Color(0xFFB60158), shape = RoundedCornerShape(60.dp)),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFDAF3))
-            ) { Text("Criar Conta" , color = Color(0xFFB60158), fontWeight = FontWeight.Bold, fontSize = 20.sp) }
+            ) { Text("Criar Conta" , color = Color(0xFFB60158), fontWeight = FontWeight.Bold, fontSize = 18.sp) }
         }
 
 

@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
@@ -28,15 +30,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.oncoguard.core.components.CustomTopAppBar
 import com.example.oncoguard.core.navigation.Screen
+import com.example.oncoguard.feature.perfil.EditarPerfilScreen
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -52,18 +58,20 @@ fun LoginScreen(navController: NavController) {
                 navController = navController
             )
         }
-    ){ paddingValues ->
-        Box(
+    ) { paddingValues ->
+        val scrollState = rememberScrollState()
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(scrollState)
                 .background(Color(0xFF54A1E0)),
-            contentAlignment = Alignment.BottomCenter
+            verticalArrangement = Arrangement.Bottom
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.8f)
+                    .fillMaxHeight()
                     .background(
                         Color(0xFFF3F3F3),
                         shape = RoundedCornerShape(topStart = 80.dp, topEnd = 80.dp)
@@ -81,10 +89,9 @@ fun LoginScreen(navController: NavController) {
 
                 Column(
                     modifier = Modifier
-                        .widthIn(max = 400.dp)
-                        .fillMaxWidth(0.9f),
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
                     OutlinedTextField(
                         value = email,
@@ -92,7 +99,12 @@ fun LoginScreen(navController: NavController) {
                         label = { Text("Email", color = Color(0xFF4F4E4E)) },
                         shape = RoundedCornerShape(10.dp),
                         textStyle = TextStyle(color = Color(0xFF494949)),
-                        placeholder = { Text("Ex: alicesilva12@gmail.com", color = Color(0xFFBCBCBC)) },
+                        placeholder = {
+                            Text(
+                                "Ex: alicesilva12@gmail.com",
+                                color = Color(0xFFBCBCBC)
+                            )
+                        },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Email
                         )
@@ -111,43 +123,52 @@ fun LoginScreen(navController: NavController) {
                             keyboardType = KeyboardType.NumberPassword
                         )
                     )
-                }
-                Button(
-                    onClick = { navController.navigate(Screen.Home.route) },
-                    modifier = Modifier
-                        .fillMaxWidth(0.84f)
-                        .height(50.dp),
-                    shape = RoundedCornerShape(60.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
-                ) {
-                    Text(
-                        text = "Entrar",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-
-                Text(
-                    text = "Ou entre com",
-                    color = Color(0xFF64002C),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-
-                Text(
-                    text = "Não tem uma conta? Cadastrar",
-                    color = Color(0xFF64002C),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 17.sp,
-                    modifier = Modifier.clickable {
-                        // Navega para a tela de cadastro
-                        navController.navigate(Screen.Cadastro.route)
+                    Button(
+                        onClick = { navController.navigate(Screen.Home.route) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        shape = RoundedCornerShape(60.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                    ) {
+                        Text(
+                            text = "Entrar",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
-                )
+
+                    Text(
+                        text = "Ou entre com",
+                        color = Color(0xFF64002C),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+
+                    Text(
+                        text = "Não tem uma conta? Cadastrar",
+                        color = Color(0xFF64002C),
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                        fontSize = 17.sp,
+                        modifier = Modifier.clickable {
+                            // Navega para a tela de cadastro
+                            navController.navigate(Screen.Cadastro.route)
+                        }
+                    )
+
+                }
+
             }
         }
-
     }
+}
 
-
+@Preview(showBackground = true)
+@Composable
+fun LoginPreview() {
+    LoginScreen(
+        navController = NavController(LocalContext.current) // TODO()
+    )
 }

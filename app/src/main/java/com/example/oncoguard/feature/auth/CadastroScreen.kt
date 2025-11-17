@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
@@ -41,7 +43,7 @@ import com.example.oncoguard.core.components.CustomTopAppBar
 import com.example.oncoguard.core.navigation.Screen
 
 @Composable
-fun CadastroScreen(navController: NavController){
+fun CadastroScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var nome by remember { mutableStateOf("") }
@@ -57,18 +59,20 @@ fun CadastroScreen(navController: NavController){
                 titleColor = Color(0xFFFFFFFF)
             )
         }
-    ){ paddingValues ->
-        Box(
+    ) { paddingValues ->
+        val scrollState = rememberScrollState()
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(scrollState)
                 .background(Color(0xFF54A1E0)),
-            contentAlignment = Alignment.BottomCenter
+            verticalArrangement = Arrangement.Bottom
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.9f)
+                    .fillMaxHeight()
                     .background(
                         Color(0xFFF3F3F3),
                         shape = RoundedCornerShape(topStart = 80.dp, topEnd = 80.dp)
@@ -89,7 +93,7 @@ fun CadastroScreen(navController: NavController){
                         .widthIn(max = 400.dp)
                         .fillMaxWidth(0.9f),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
                     OutlinedTextField(
                         value = nome,
@@ -122,39 +126,42 @@ fun CadastroScreen(navController: NavController){
                             keyboardType = KeyboardType.NumberPassword
                         )
                     )
-                }
-                Button(
-                    onClick = { navController.navigate(Screen.Home.route) },
-                    modifier = Modifier
-                        .fillMaxWidth(0.84f)
-                        .height(50.dp),
-                    shape = RoundedCornerShape(60.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
-                ) {
-                    Text(
-                        text = "Cadastrar",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
 
-                Text(
-                    text = "Ou entre com",
-                    color = Color(0xFF64002C),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-
-                Text(
-                    text = "Já tem uma conta? Entrar",
-                    color = Color(0xFF64002C),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 17.sp,
-                    modifier = Modifier.clickable {
-                        // Navega para a tela de cadastro
-                        navController.navigate(Screen.Login.route)
+                    Button(
+                        onClick = { navController.navigate(Screen.Home.route) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        shape = RoundedCornerShape(60.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                    ) {
+                        Text(
+                            text = "Cadastrar",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
-                )
+
+                    Text(
+                        text = "Ou entre com",
+                        color = Color(0xFF64002C),
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+
+                    Text(
+                        text = "Já tem uma conta? Entrar",
+                        color = Color(0xFF64002C),
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 17.sp,
+                        modifier = Modifier.clickable {
+                            // Navega para a tela de cadastro
+                            navController.navigate(Screen.Login.route)
+                        }
+                    )
+
+                }
+
             }
         }
     }

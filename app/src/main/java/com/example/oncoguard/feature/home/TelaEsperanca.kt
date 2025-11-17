@@ -4,7 +4,9 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
@@ -94,12 +96,16 @@ fun TelaEsperanca(navController: NavController) {
             )
         }
     ) { paddingValues ->
+        val scrollState = rememberScrollState()
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(paddingValues)
         ) {
+
+            // Cabeçalho fixo, mas ainda rola junto
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -114,25 +120,19 @@ fun TelaEsperanca(navController: NavController) {
                     fontWeight = FontWeight.Bold
                 )
             }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0xFF54A1E0)),
-                contentAlignment = Alignment.Center
-            ) {
+            Box(modifier = Modifier.background(Color(0xFF54A1E0))) {
+                // Conteúdo que deve rolar
                 Surface(
                     shape = RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp),
                     color = Color.White,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 20.dp)
+                    modifier = Modifier.fillMaxWidth().padding(top = 20.dp)
                 ) {
+
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(33.dp),
+                            .padding(33.dp)
                     ) {
+
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Row(
@@ -151,9 +151,7 @@ fun TelaEsperanca(navController: NavController) {
                                 )
                             }
 
-                            Column(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
+                            Column(modifier = Modifier.fillMaxWidth()) {
                                 Text(
                                     text = esperanca.titulo,
                                     color = Color(0xFFB60158),
@@ -170,29 +168,23 @@ fun TelaEsperanca(navController: NavController) {
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "Renascendo a Cada Amanhecer:",
-                                color = Color(0xFFB60158),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                modifier = Modifier.fillMaxWidth()
-                            )
 
-                            Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Renascendo a Cada Amanhecer:",
+                            color = Color(0xFFB60158),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
-                            Text(
-                                text = esperanca.conteudo,
-                                fontSize = 15.sp,
-                                color = Color.Black,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = esperanca.conteudo,
+                            color = Color.DarkGray,
+                            lineHeight = 24.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
 
                         Button(
                             onClick = {

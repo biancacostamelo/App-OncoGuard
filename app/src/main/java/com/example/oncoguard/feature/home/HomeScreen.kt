@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.handwriting.handwritingDetector
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Close
@@ -20,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -229,7 +229,7 @@ fun ButtonItemWithImage(
     Column(
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .height(265.dp)
+            //.height(265.dp)
             .shadow(
                 elevation = 2.dp,
                 shape = RoundedCornerShape(20.dp),
@@ -240,14 +240,14 @@ fun ButtonItemWithImage(
             )
             .background(Color.White, RoundedCornerShape(20.dp))
             .clickable { onClick() } // se quiser clique
-            .padding(bottom = 8.dp)
     ) {
         Image(
             painter = painterResource(id = imageRes),
             contentDescription = text,
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(176.dp)
+               // .height(176.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
         )
 
@@ -255,7 +255,7 @@ fun ButtonItemWithImage(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .padding(horizontal = 12.dp)
+                .padding(15.dp)
                 .fillMaxHeight()
         ) {
             Text(

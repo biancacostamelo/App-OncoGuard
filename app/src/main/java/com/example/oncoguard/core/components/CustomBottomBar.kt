@@ -39,6 +39,7 @@ fun CustomBottomBar(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Color.White)
             // deixe espaço para a area da nav bar (evita sobrepor os botões)
             .height(visibleBarHeight + navBarBottomPadding),
         contentAlignment = Alignment.BottomCenter

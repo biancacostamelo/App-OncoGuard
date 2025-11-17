@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -64,6 +66,8 @@ fun PlanoDiamante(navController: NavController) {
         },
         contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
+
+        val scrollState = rememberScrollState()
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -77,6 +81,7 @@ fun PlanoDiamante(navController: NavController) {
                     .background(Color(0xFFFFFFFF))
                     .fillMaxSize()
                     .padding(horizontal = 30.dp, vertical = 28.dp)
+                    .verticalScroll(scrollState)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(
@@ -98,7 +103,7 @@ fun PlanoDiamante(navController: NavController) {
                     Text(
                         text = "R\$ 230,00",
                         color = Color(0xFFB60158),
-                        fontSize = 48.sp,
+                        fontSize = 40.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -185,7 +190,7 @@ fun PlanoDiamante(navController: NavController) {
                         Text(text = "Recuperação de mensagens apagadas ", color = Color(0xFFB60158))
                     }
                 }
-                Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.fillMaxSize()) {
+                Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.fillMaxSize().padding(top = 20.dp)) {
                     Button(
                         onClick = {},
                         shape = RoundedCornerShape(21.dp),

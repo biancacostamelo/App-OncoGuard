@@ -67,7 +67,7 @@ fun EditarPerfilScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-
+                .background(Color(0xFFFEFDF9))
                 .verticalScroll(scrollState)
                 .consumeWindowInsets(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,

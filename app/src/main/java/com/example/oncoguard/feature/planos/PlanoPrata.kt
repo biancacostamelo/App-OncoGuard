@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -66,6 +68,7 @@ fun PlanoPrata(navController: NavController) {
         },
         contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
+        val scrollState = rememberScrollState()
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -76,8 +79,9 @@ fun PlanoPrata(navController: NavController) {
         ) {
             Column (modifier = Modifier
                 .background(Color(0xFFFFFFFF))
-               // .fillMaxSize()
+                .fillMaxSize()
                 .padding(horizontal = 30.dp, vertical = 28.dp)
+                .verticalScroll(scrollState)
             ) {
                 Row( verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween ) {
                     Text(text = "PRATA", color = Color(0xFFB60158), fontSize = 36.sp, fontWeight = FontWeight.SemiBold)
@@ -91,7 +95,7 @@ fun PlanoPrata(navController: NavController) {
                     )
                 }
                 Column(){
-                    Text(text = "R\$ 0,00", color = Color(0xFFB60158), fontSize = 48.sp, fontWeight = FontWeight.SemiBold)
+                    Text(text = "R\$ 0,00", color = Color(0xFFB60158), fontSize = 40.sp, fontWeight = FontWeight.SemiBold)
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Dia a dia limitado.", color = Color(0xFFB60158), fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
                 }
@@ -137,7 +141,7 @@ fun PlanoPrata(navController: NavController) {
                     verticalArrangement = Arrangement.Bottom,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(bottom = 20.dp)
+                        .padding(bottom = 20.dp).padding(top = 20.dp)
                 ) {
 
                     Button(
