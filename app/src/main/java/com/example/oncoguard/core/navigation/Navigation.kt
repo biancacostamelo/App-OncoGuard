@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.oncoguard.TelaONGS
 import com.example.oncoguard.feature.auth.CadastroScreen
 import com.example.oncoguard.feature.auth.LoginScreen
 import com.example.oncoguard.feature.chat.ChatScreen
@@ -17,6 +16,7 @@ import com.example.oncoguard.feature.home.TelaComunidade
 import com.example.oncoguard.feature.home.TelaDicas
 import com.example.oncoguard.feature.home.TelaEsperanca
 import com.example.oncoguard.feature.home.TelaMedico
+import com.example.oncoguard.feature.home.TelaONGS
 import com.example.oncoguard.feature.inicio.InicioScreen
 import com.example.oncoguard.feature.perfil.ConfigScreen
 import com.example.oncoguard.feature.perfil.EditarPerfilScreen
