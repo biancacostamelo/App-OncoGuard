@@ -52,7 +52,7 @@ fun HomeScreen(navController: NavController) {
         ButtonData("Bem Estar", R.drawable.personagem_bemestar, "Cuide da mente e do corpo."),
         ButtonData("Médico", R.drawable.medico, "Acompanhe hospitais e clinicas perto de você."),
         ButtonData("Calendário", R.drawable.calendario, "Organize seus compromissos de saúde."),
-        ButtonData("ONGs", R.drawable.ong, "Encontre apoio e redes solidárias.")
+        ButtonData("ONGs", R.drawable.ongs__2_, "Encontre apoio e redes solidárias.")
     )
 
     // Função de pesquisa

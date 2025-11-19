@@ -18,6 +18,11 @@ import com.example.oncoguard.feature.home.TelaEsperanca
 import com.example.oncoguard.feature.home.TelaMedico
 import com.example.oncoguard.feature.home.TelaONGS
 import com.example.oncoguard.feature.inicio.InicioScreen
+import com.example.oncoguard.feature.ongs.ONGcinco
+import com.example.oncoguard.feature.ongs.ONGdois
+import com.example.oncoguard.feature.ongs.ONGquatro
+import com.example.oncoguard.feature.ongs.ONGtres
+import com.example.oncoguard.feature.ongs.ONGum
 import com.example.oncoguard.feature.perfil.ConfigScreen
 import com.example.oncoguard.feature.perfil.EditarPerfilScreen
 import com.example.oncoguard.feature.planos.PlanoDiamante
@@ -47,6 +52,11 @@ sealed class Screen(val route: String) {
     object  PlanoDiamante : Screen("PlanoDiamante")
     object  PlanoOuro : Screen("PlanoOuro")
     object  PlanoPrata : Screen("PlanoPrata")
+    object  ONGum : Screen("ONGum")
+    object  ONGdois : Screen("ONGdois")
+    object  ONGtres : Screen("ONGtres")
+    object  ONGquatro : Screen("ONGquatro")
+    object  ONGcinco : Screen("ONGcinco")
 }
 
 @Composable
@@ -115,6 +125,21 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         }
         composable (Screen.PlanoPrata.route){
             PlanoPrata(navController)
+        }
+        composable (Screen.ONGum.route){
+            ONGum(navController)
+        }
+        composable (Screen.ONGdois.route){
+            ONGdois(navController)
+        }
+        composable (Screen.ONGtres.route){
+            ONGtres(navController)
+        }
+        composable (Screen.ONGquatro.route){
+            ONGquatro(navController)
+        }
+        composable (Screen.ONGcinco.route){
+            ONGcinco(navController)
         }
     }
 }

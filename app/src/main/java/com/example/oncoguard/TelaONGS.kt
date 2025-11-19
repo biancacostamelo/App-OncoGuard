@@ -115,7 +115,7 @@ fun TelaONGS(navController: NavController) {
 
 
                         Button(
-                            onClick = { navController.navigate("TelaComunidade") },
+                            onClick = { navController.navigate("ONGum") },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFB60158),
                                 contentColor = Color.White
@@ -126,7 +126,84 @@ fun TelaONGS(navController: NavController) {
                                 .height(50.dp)
                         ) {
                             Text(
-                                text = "Comunidade",
+                                text = "FEMAMA",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = { navController.navigate("ONGdois") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB60158),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            Text(
+                                text = "Instituto Cérasus",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            ) }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = { navController.navigate("ONGtres") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB60158),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            Text(
+                                text = "Mamas do Amor",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            ) }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = { navController.navigate("ONGquatro") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB60158),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            Text(
+                                text = "Associação das Mulheres de Peito",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            ) }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Button(
+                            onClick = { navController.navigate("ONGcinco") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB60158),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(30.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            Text(
+                                text = "Américas Amigas",
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold
                             )
