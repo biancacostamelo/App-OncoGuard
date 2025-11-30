@@ -8,11 +8,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.oncoguard.feature.auth.CadastroScreen
 import com.example.oncoguard.feature.auth.LoginScreen
 import com.example.oncoguard.feature.chat.ChatScreen
+import com.example.oncoguard.feature.comunidade.ChatComunidade
 import com.example.oncoguard.feature.home.HomeScreen
 import com.example.oncoguard.feature.home.TelaAcolhimento
 import com.example.oncoguard.feature.home.TelaBemEstar
 import com.example.oncoguard.feature.home.TelaCalendario
-import com.example.oncoguard.feature.home.TelaComunidade
+import com.example.oncoguard.feature.comunidade.TelaComunidade
+import com.example.oncoguard.feature.comunidade.TelaPerfilUsuario
 import com.example.oncoguard.feature.home.TelaDicas
 import com.example.oncoguard.feature.home.TelaEsperanca
 import com.example.oncoguard.feature.home.TelaMedico
@@ -57,6 +59,8 @@ sealed class Screen(val route: String) {
     object  ONGtres : Screen("ONGtres")
     object  ONGquatro : Screen("ONGquatro")
     object  ONGcinco : Screen("ONGcinco")
+    object  TelaPerfilUsuario : Screen("TelaPerfilUsuario")
+    object  ChatComunidade : Screen("TelaPerfilUsuario")
 }
 
 @Composable
@@ -140,6 +144,14 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
         }
         composable (Screen.ONGcinco.route){
             ONGcinco(navController)
+        }
+        composable ("ChatComunidade/{uid}"){ backStackEntry ->
+            val uid = backStackEntry.arguments?.getString("uid") ?: ""
+            ChatComunidade(uid = uid, navController = navController)
+        }
+        composable("TelaPerfilUsuario/{uid}"){ backStackEntry ->
+            val uid = backStackEntry.arguments?.getString("uid") ?: ""
+            TelaPerfilUsuario(uid = uid, navController = navController)
         }
     }
 }

@@ -1,7 +1,11 @@
 package com.example.oncoguard.feature.perfil
 
-import androidx.compose.foundation.Image
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +29,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,21 +40,62 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.example.oncoguard.core.components.CustomTopAppBar
-import com.example.oncoguard.R
-import com.example.oncoguard.core.components.CustomBottomBar2
 import com.example.oncoguard.core.navigation.Screen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+
 
 @Composable
-fun EditarPerfilScreen(navController: NavController){
+fun EditarPerfilScreen(navController: NavController, vm: PerfilViewModel = viewModel()) {
+    val context = LocalContext.current
+    val uid = Firebase.auth.currentUser?.uid ?: return
+    var fotoUrl by remember { mutableStateOf<String?>(null) }
+
+    var nome by remember { mutableStateOf("") }
+    var telefone by remember { mutableStateOf("") }
+    var aniversario by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                nome = doc.getString("nome") ?: ""
+                telefone = doc.getString("telefone") ?: ""
+                aniversario = doc.getString("aniversario") ?: ""
+                email = doc.getString("email") ?: ""
+                fotoUrl = doc.getString("foto")
+            }
+    }
+
+    // Launcher pra escolher imagem
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            vm.enviarFotoParaCloudinary(uri, context, uid) { novaUrl ->
+                fotoUrl = novaUrl
+            }
+
+        }
+    }
+
+    Log.d("FIRESTORE", "fotinha $fotoUrl")
+
     Scaffold(
         bottomBar = { CustomBottomBar(navController = navController) },
         contentWindowInsets = WindowInsets.safeDrawing,
@@ -71,39 +117,51 @@ fun EditarPerfilScreen(navController: NavController){
                 .verticalScroll(scrollState)
                 .consumeWindowInsets(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
-
-        ) {
-            Box( modifier = Modifier
-                .clip(RoundedCornerShape(bottomEnd = 100.dp, bottomStart = 100.dp))
-                .width(214.dp)
-                .background(Color(0xFF54A1E0))
-                .padding(start = 28.dp, end = 28.dp, top = 0.dp, bottom = 28.dp)
             ) {
-                Box(modifier = Modifier
-                    .height(155.dp)
-                    .width(155.dp)
-                    .clip(RoundedCornerShape(150.dp))
-                    .background(Color(0xFFB60158))
-                    .padding(15.dp),
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(bottomEnd = 100.dp, bottomStart = 100.dp))
+                    .width(214.dp)
+                    .background(Color(0xFF54A1E0))
+                    .padding(start = 28.dp, end = 28.dp, top = 0.dp, bottom = 28.dp)
+                    .clickable { launcher.launch("image/*") }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(155.dp)
+                        .width(155.dp)
+                        .clip(RoundedCornerShape(150.dp))
+                        .background(Color(0xFFB60158))
+                        .padding(15.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.iconnavbar),
-                        contentDescription = "Avatar",
-                        contentScale = ContentScale.Crop,
-                        alignment = Alignment.TopCenter,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .fillMaxSize()
-                    )
+                    if (fotoUrl != null) {
+                        AsyncImage(
+                            model = fotoUrl,
+                            contentDescription = "Foto do usuário",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .fillMaxSize()
+                        )
+
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(CircleShape)
+                                .background(Color.LightGray),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                "Adicionar\nfoto",
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                    }
                 }
             }
-
-
-            var nome by remember { mutableStateOf("") }
-            var telefone by remember { mutableStateOf("") }
-            var aniversario by remember { mutableStateOf("") }
-            var email by remember { mutableStateOf("") }
 
             Column(
                 modifier = Modifier
@@ -145,7 +203,22 @@ fun EditarPerfilScreen(navController: NavController){
                 )
 
                 Button(
-                    onClick = { navController.navigate(Screen.Home.route) },
+                    onClick = {
+                        salvarPerfil(
+                            nome = nome,
+                            telefone = telefone,
+                            aniversario = aniversario,
+                            email = email,
+                            onSuccess = {
+                                Toast.makeText(context, "Dados atualizados!", Toast.LENGTH_SHORT)
+                                    .show()
+                                navController.navigate(Screen.Home.route)
+                            },
+                            onError = {
+                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    },
                     modifier = Modifier
                         .padding(top = 10.dp)
                         .fillMaxWidth(0.87f)
@@ -161,10 +234,48 @@ fun EditarPerfilScreen(navController: NavController){
                     )
                 }
             }
-
         }
     }
 }
+
+fun salvarPerfil(
+    nome: String,
+    telefone: String,
+    aniversario: String,
+    email: String,
+    onSuccess: () -> Unit,
+    onError: (String) -> Unit
+) {
+    val db = FirebaseFirestore.getInstance()
+    val uid = Firebase.auth.currentUser?.uid ?: return
+
+    val dadosAtualizados = mapOf(
+        "nome" to nome,
+        "telefone" to telefone,
+        "aniversario" to aniversario,
+        "email" to email
+    )
+
+    db.collection("users").document(uid)
+        .update(dadosAtualizados)
+        .addOnSuccessListener {
+
+            db.collection("historias")
+                .whereEqualTo("uid", uid)
+                .get()
+                .addOnSuccessListener { result ->
+                    for (doc in result) {
+                        doc.reference.update("nome", nome)
+                    }
+                    onSuccess()
+                }
+        }
+        .addOnFailureListener {
+            Log.e("UPDATE", "Erro ao atualizar usuario", it)
+        }
+
+}
+
 
 @Preview(showBackground = true)
 @Composable

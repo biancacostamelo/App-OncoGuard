@@ -33,6 +33,10 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -108,10 +112,12 @@ fun HeaderMedicos() {
             )
         }
 
+        var texto by remember { mutableStateOf("") }
+
         // B. Barra de Pesquisa
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Atualiza o estado da pesquisa */ },
+            value = texto,
+            onValueChange = { texto = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 33.dp, vertical = 8.dp),
@@ -163,7 +169,7 @@ fun HeaderMedicos() {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.mapa),
+                    painter = painterResource(id = R.drawable.mapa_com_ponto_de_localiza__o_de_destino__mapa_da_cidade_com_rua_e_rio__conceito_de_navegador_de_mapa_gps___vetor_premium_1),
                     contentDescription = "Localização no mapa",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop

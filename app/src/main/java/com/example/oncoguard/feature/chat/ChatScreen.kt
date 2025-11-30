@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.oncoguard.R
-import com.example.oncoguard.core.components.CustomTopAppBar
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,13 +30,9 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.shape.CircleShape
 import com.composables.icons.lucide.ArrowUpFromLine
 import com.composables.icons.lucide.Lucide
-import com.composables.icons.lucide.MessageSquare
 import com.composables.icons.lucide.SendHorizontal
 import com.composables.icons.lucide.Settings
-import com.example.oncoguard.core.components.CustomBottomBar
-import com.example.oncoguard.core.components.CustomBottomBar2
-import com.example.oncoguard.feature.home.PinkCard
-import com.example.oncoguard.feature.home.TextPrimary
+import com.example.oncoguard.feature.comunidade.PinkCard
 
 @Composable
 fun ChatScreen(

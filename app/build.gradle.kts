@@ -1,4 +1,6 @@
 plugins {
+    id("com.google.gms.google-services")
+
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -40,6 +42,14 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation ("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore:26.0.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("com.cloudinary:cloudinary-android:3.0.2")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+
     implementation("com.composables:icons-lucide:1.0.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

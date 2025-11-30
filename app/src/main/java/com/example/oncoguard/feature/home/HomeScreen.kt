@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -27,9 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.oncoguard.R
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.example.oncoguard.core.navigation.Screen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 data class ButtonData(
     val title: String,
@@ -44,10 +49,30 @@ fun HomeScreen(navController: NavController) {
     var searchResults by remember { mutableStateOf<List<ButtonData>>(emptyList()) }
     var isSearching by remember { mutableStateOf(false) }
 
+    val auth = Firebase.auth
+    val db = FirebaseFirestore.getInstance()
+
+    var nome by remember { mutableStateOf("") }
+    var fotoUrl by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        val uid = auth.currentUser?.uid ?: return@LaunchedEffect
+
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { doc ->
+                nome = doc.getString("nome") ?: ""
+                fotoUrl = doc.getString("foto")
+            }
+    }
+
     // Lista de opções com título, imagem e descrição
     val allOptions = listOf(
         ButtonData("Dicas", R.drawable.personagem_dica, "Dicas para o dia a dia."),
-        ButtonData("Acolhimento", R.drawable.personagem_acolhimento, "Espaço para apoio e empatia."),
+        ButtonData(
+            "Acolhimento",
+            R.drawable.personagem_acolhimento,
+            "Espaço para apoio e empatia."
+        ),
         ButtonData("Esperança", R.drawable.personagem_esperanca, "Mensagens inspiradoras."),
         ButtonData("Bem Estar", R.drawable.personagem_bemestar, "Cuide da mente e do corpo."),
         ButtonData("Médico", R.drawable.medico, "Acompanhe hospitais e clinicas perto de você."),
@@ -91,18 +116,30 @@ fun HomeScreen(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(onClick = { navController.navigate(Screen.ConfigScreen.route) }) {
-                        Icon(
-                            Icons.Filled.AccountCircle,
-                            contentDescription = "Perfil",
-                            modifier = Modifier.size(50.dp),
-                            tint =  Color(0xffB60158),
-                        )
+
+                        if (fotoUrl != null) {
+                            AsyncImage(
+                                model = fotoUrl,
+                                contentDescription = "Foto do usuário",
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                Icons.Filled.AccountCircle,
+                                contentDescription = "Perfil",
+                                modifier = Modifier.size(50.dp),
+                                tint = Color(0xffB60158),
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        text = "Olá, Alice!",
+                        text = "Olá, $nome!",
                         color = Color(0xffB60158),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Medium
@@ -124,7 +161,7 @@ fun HomeScreen(navController: NavController) {
                             imageVector = if (showSearchBar) Icons.Filled.Close else Icons.Filled.Search,
                             contentDescription = "Pesquisar",
                             modifier = Modifier.size(34.dp),
-                            tint =  Color(0xffB60158)
+                            tint = Color(0xffB60158)
                         )
                     }
                 }
@@ -159,7 +196,7 @@ fun HomeScreen(navController: NavController) {
                     .padding(vertical = 16.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Divider(modifier = Modifier.weight(1f),  color = Color(0xffB60158), thickness = 1.dp)
+                Divider(modifier = Modifier.weight(1f), color = Color(0xffB60158), thickness = 1.dp)
 
                 Text(
                     text = "Bem-Vinda(o)!",
@@ -169,7 +206,7 @@ fun HomeScreen(navController: NavController) {
                     fontWeight = FontWeight.Medium
                 )
 
-                Divider(modifier = Modifier.weight(1f),  color = Color(0xffB60158), thickness = 1.dp)
+                Divider(modifier = Modifier.weight(1f), color = Color(0xffB60158), thickness = 1.dp)
             }
 
             val itemsToDisplay = if (showSearchBar && isSearching) searchResults else allOptions
@@ -237,7 +274,7 @@ fun ButtonItemWithImage(
                 ambientColor = Color(0xFF42031E), // sombra suave
                 spotColor = Color(0xFF42031E),
 
-            )
+                )
             .background(Color.White, RoundedCornerShape(20.dp))
             .clickable { onClick() } // se quiser clique
     ) {
@@ -247,7 +284,7 @@ fun ButtonItemWithImage(
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
-               // .height(176.dp)
+                // .height(176.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
         )
 

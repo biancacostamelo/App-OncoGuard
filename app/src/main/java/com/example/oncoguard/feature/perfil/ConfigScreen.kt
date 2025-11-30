@@ -5,6 +5,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Info
@@ -38,6 +40,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,13 +58,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.example.oncoguard.core.components.CustomTopAppBar
 import com.example.oncoguard.R
 import com.example.oncoguard.core.navigation.Screen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun ConfigScreen(navController: NavController) {
+    val auth = Firebase.auth
+    val db = FirebaseFirestore.getInstance()
+
+    var fotoUrl by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        val uid = auth.currentUser?.uid ?: return@LaunchedEffect
+
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { doc ->
+                fotoUrl = doc.getString("foto")
+            }
+    }
+
+
     Scaffold(
         bottomBar = { CustomBottomBar(navController = navController) },
         contentWindowInsets = WindowInsets.safeDrawing,
@@ -119,15 +141,30 @@ fun ConfigScreen(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.iconnavbar),
-                            contentDescription = "Avatar",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxWidth(0.3f) // 30% da largura da Row
-                                .aspectRatio(1f)    // deixa a imagem quadrada
-                                .clip(CircleShape)
-                        )
+                        if (fotoUrl != null) {
+                            AsyncImage(
+                                model = fotoUrl,
+                                contentDescription = "Avatar",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.3f) // 30% da Row
+                                    .aspectRatio(1f)    // Quadrada
+                                    .clip(CircleShape)
+                                    .border(
+                                        width = 4.dp,
+                                        color = Color(0xFFB60158),
+                                        shape = CircleShape
+                                    )
+                            )
+
+                        } else {
+                            Icon(
+                                Icons.Filled.AccountCircle,
+                                contentDescription = "Perfil",
+                                modifier = Modifier.size(50.dp),
+                                tint = Color(0xFF6C6C6C),
+                            )
+                        }
 
                         Column(
                             verticalArrangement = Arrangement.SpaceEvenly
@@ -326,6 +363,12 @@ fun ConfigScreen(navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clickable{
+                                Firebase.auth.signOut()
+                                navController.navigate(Screen.Login.route) {
+                                    popUpTo("home") { inclusive = true }
+                                }
+                            }
                             .drawBehind {
                                 // Linha inferior (2.dp, rosa)
                                 val strokeWidth = 1.dp.toPx()
@@ -354,13 +397,8 @@ fun ConfigScreen(navController: NavController) {
                             color = Color(color = 0xFFB60158)
                         )
                     }
-
-
                 }
-
-
             }
-
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.oncoguard.feature.auth
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,22 +45,39 @@ import androidx.navigation.NavController
 import com.example.oncoguard.core.components.CustomTopAppBar
 import com.example.oncoguard.core.navigation.Screen
 import com.example.oncoguard.feature.perfil.EditarPerfilScreen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 @Composable
 fun LoginScreen(navController: NavController) {
-    var email by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("bianca.costamelo1@gmail.com") }
+    var senha by remember { mutableStateOf("123456") }
+    val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            CustomTopAppBar(
-                title = "Voltar",
-                navigationIcon = Icons.Default.Info,
-                showBackButton = true,
-                navController = navController
-            )
-        }
-    ) { paddingValues ->
+    fun login(){
+        Firebase.auth.signInWithEmailAndPassword(email, senha)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    Toast.makeText(
+                        context,
+                        "Login feito com sucesso!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    navController.navigate(Screen.Home.route){
+                        popUpTo("login") {inclusive = true}
+                    }
+                } else {
+                    Toast.makeText(
+                        context,
+                        task.exception?.message ?: "Login Falhou",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    Scaffold() { paddingValues ->
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -124,7 +143,7 @@ fun LoginScreen(navController: NavController) {
                         )
                     )
                     Button(
-                        onClick = { navController.navigate(Screen.Home.route) },
+                        onClick = { login() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp),

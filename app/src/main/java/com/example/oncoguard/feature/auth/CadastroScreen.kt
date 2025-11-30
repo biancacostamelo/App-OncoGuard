@@ -1,9 +1,9 @@
 package com.example.oncoguard.feature.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,6 +41,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.oncoguard.core.components.CustomTopAppBar
 import com.example.oncoguard.core.navigation.Screen
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun CadastroScreen(navController: NavController) {
@@ -49,17 +52,8 @@ fun CadastroScreen(navController: NavController) {
     var nome by remember { mutableStateOf("") }
 
 
-    Scaffold(
-        topBar = {
-            CustomTopAppBar(
-                title = "Voltar",
-                navigationIcon = Icons.Default.Info,
-                showBackButton = true,
-                navController = navController,
-                titleColor = Color(0xFFFFFFFF)
-            )
-        }
-    ) { paddingValues ->
+
+    Scaffold() { paddingValues ->
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -109,9 +103,7 @@ fun CadastroScreen(navController: NavController) {
                         label = { Text("Email", color = Color(0xFF4F4E4E)) },
                         textStyle = TextStyle(color = Color(0xFF494949)),
                         shape = RoundedCornerShape(10.dp),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email
-                        )
+
                     )
 
 
@@ -121,14 +113,42 @@ fun CadastroScreen(navController: NavController) {
                         label = { Text("Senha", color = Color(0xFF4F4E4E)) },
                         textStyle = TextStyle(color = Color(0xFF494949)),
                         shape = RoundedCornerShape(10.dp),
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.NumberPassword
-                        )
+
                     )
 
+                    val context = LocalContext.current
+
                     Button(
-                        onClick = { navController.navigate(Screen.Home.route) },
+                        onClick = {
+                            val auth = Firebase.auth
+                            val db = FirebaseFirestore.getInstance()
+
+                            auth.createUserWithEmailAndPassword(email, senha)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
+
+                                        db.collection("users").document(uid)
+                                            .set(
+                                                mapOf(
+                                                    "nome" to nome,
+                                                    "email" to email
+                                                )
+                                            ).addOnSuccessListener {
+                                                Toast.makeText(context, "Cadastro concluído!", Toast.LENGTH_SHORT).show()
+                                                navController.navigate("login") {
+                                                    popUpTo(Screen.Cadastro.route) { inclusive = true }
+                                                }
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(context, "Erro ao salvar no Firestore: ${it.message}", Toast.LENGTH_LONG).show()
+                                            }
+
+                                    } else {
+                                        Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp),

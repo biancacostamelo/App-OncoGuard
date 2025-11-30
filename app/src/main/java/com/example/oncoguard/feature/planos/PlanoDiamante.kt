@@ -63,8 +63,7 @@ fun PlanoDiamante(navController: NavController) {
                 showBackButton = true,
                 navController = navController
             )
-        },
-        contentWindowInsets = WindowInsets.safeDrawing
+        }, contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
 
         val scrollState = rememberScrollState()
@@ -83,7 +82,10 @@ fun PlanoDiamante(navController: NavController) {
                     .padding(horizontal = 30.dp, vertical = 28.dp)
                     .verticalScroll(scrollState)
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         text = "DIAMANTE",
                         color = Color(0xFFB60158),
@@ -115,10 +117,9 @@ fun PlanoDiamante(navController: NavController) {
                     )
                 }
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp), modifier = Modifier
-                        .padding(top = 35.dp)
-                )
-                {
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    modifier = Modifier.padding(top = 35.dp)
+                ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Lucide.MessageSquare,
@@ -148,12 +149,10 @@ fun PlanoDiamante(navController: NavController) {
                             imageVector = Lucide.Globe,
                             contentDescription = "Message Square",
                             tint = Color(0xFFB60158),
-
-                            )
+                        )
                         Spacer(modifier = Modifier.width(15.dp))
                         Text(
-                            text = "Localização de voluntarios no BRASIL",
-                            color = Color(0xFFB60158)
+                            text = "Localização de voluntarios no BRASIL", color = Color(0xFFB60158)
                         )
                     }
 
@@ -190,14 +189,18 @@ fun PlanoDiamante(navController: NavController) {
                         Text(text = "Recuperação de mensagens apagadas ", color = Color(0xFFB60158))
                     }
                 }
-                Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.fillMaxSize().padding(top = 20.dp)) {
+                Column(
+                    verticalArrangement = Arrangement.Bottom,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 20.dp)
+                ) {
                     Button(
                         onClick = {},
                         shape = RoundedCornerShape(21.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158)),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            //.height(66.dp)
+                        modifier = Modifier.fillMaxWidth()
+                        //.height(66.dp)
                     ) {
                         Text(
                             text = "Assinar Diamante",

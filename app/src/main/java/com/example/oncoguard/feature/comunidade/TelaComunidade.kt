@@ -1,5 +1,7 @@
-package com.example.oncoguard.feature.home
+package com.example.oncoguard.feature.comunidade
 
+import android.net.Uri
+import android.util.Log
 import androidx.navigation.NavController
 
 import androidx.compose.foundation.Image
@@ -15,7 +17,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -33,6 +34,8 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,43 +50,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.oncoguard.R
 import com.example.oncoguard.core.components.CustomBottomBar
-import com.example.oncoguard.feature.home.PinkHeader
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 val PinkHeader = Color(0xFFFEE8FC)
 val PinkCard = Color(0xFFC71585)
 val BlueFooter = Color(0xFF64B5F6)
 val TextPrimary = Color(0xFF333333)
 
-data class HistoriasComunidade(
-    val id: Int,
-    val nome: String,
-    val idade: Int,
-    val historia: String,
-    val avatarResId: Int
-)
-
-val historiasExemplo = mutableListOf(
-    HistoriasComunidade(
-        1,
-        "ELISA",
-        22,
-        "... A vida, agora, tinha um sabor mais doce. Cada amanhecer era uma conquista. Ela havia perdido muito, mas ganhara a si mesma. E isso era tudo.",
-        R.drawable.elisa_avatar
-    ),
-    HistoriasComunidade(
-        2,
-        "CELINE",
-        35,
-        "Ela não superou por ter apagado o passado. Ela superou por ter se reconstruído, mais forte, mais gentil, e infinitamente mais viva...",
-        R.drawable.celine_avatar
-    )
-)
+val auth = Firebase.auth
+val usuario = auth.currentUser
+val nomeUser = usuario?.displayName ?: "Sem nome"
+val uid = usuario?.uid ?: ""
 
 @Composable
-fun TelaComunidade(navController: NavController) {
+
+fun TelaComunidade(navController: NavController, vm: HistoriaViewModel = viewModel()) {
+    val historias by vm.historias.collectAsState()
+
     Scaffold(
         bottomBar = { CustomBottomBar(navController = navController) },
         contentWindowInsets = WindowInsets.safeDrawing
@@ -106,8 +97,52 @@ fun TelaComunidade(navController: NavController) {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                items(historiasExemplo) { historia ->
-                    HistoriaCard(historia = historia)
+                items(historias) { item ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(PinkCard)
+                            .clickable {
+                                val uid = item["uid"] ?: return@clickable
+                                val encoded = Uri.encode(uid)
+                                navController.navigate("TelaPerfilUsuario/$encoded")
+                            }
+                            .padding(20.dp),
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(70.dp)
+                                .clip(CircleShape)
+                                .background(Color.White)
+                                .padding(4.dp)
+                                .clip(CircleShape)
+                        ) {
+                            AsyncImage(
+                                model = item["foto"],
+                                contentDescription = item["nome"],
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column {
+                            Text(
+                                text = item["nome"] ?: "sem nome",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                item["historia"] ?: "",
+                                color = Color.White.copy(alpha = 0.9f),
+                                fontSize = 16.sp,
+                                lineHeight = 22.sp
+                            )
+                        }
+                    }
                 }
 
                 item {
@@ -162,11 +197,31 @@ fun HeaderComunidade(navController: NavController) {
 }
 
 @Composable
-fun InputHistoria() {
-    var texto by remember { mutableStateOf("") }
+fun InputHistoria(vm: HistoriaViewModel = viewModel()) {
+    val historias by vm.historias.collectAsState()
+
+    val uid = Firebase.auth.currentUser?.uid ?: ""
+    var nomeUser by remember { mutableStateOf("Carregando...") }
+    var fotoUser by remember { mutableStateOf<String?>(null) }
+
+// Carregar nome + foto
+    LaunchedEffect(uid) {
+        val userDoc = FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(uid)
+            .get()
+            .await()
+
+        nomeUser = userDoc.getString("nome") ?: "Usuário"
+        fotoUser = userDoc.getString("foto")
+    }
+
+    var textoHistoria by remember { mutableStateOf("") }
+    Log.d("AUTH_TEST", "historias: ${historias}")
+
     OutlinedTextField(
-        value = texto,
-        onValueChange = { texto = it },
+        value = textoHistoria,
+        onValueChange = { textoHistoria = it },
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Transparent)
@@ -185,16 +240,13 @@ fun InputHistoria() {
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        historiasExemplo.add(
-                            HistoriasComunidade(
-                                id = historiasExemplo.size + 1,
-                                nome = "Alicia",
-                                idade = 65,
-                                historia = texto, // aqui entra o valor digitado
-                                avatarResId = R.drawable.iconnavbar
-                            )
-                        )
-                        texto = ""
+                        if (textoHistoria.isNotBlank()) {
+                            vm.enviarHistoria(textoHistoria, nomeUser, uid, fotoUser)
+
+                            textoHistoria = ""
+                        }
+                        textoHistoria = ""
+
                     }
             )
         },
@@ -211,50 +263,6 @@ fun InputHistoria() {
     )
 }
 
-
-@Composable
-fun HistoriaCard(historia: HistoriasComunidade) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(PinkCard)
-            .padding(20.dp),
-        verticalAlignment = Alignment.Top
-    ) {
-        Box(
-            modifier = Modifier
-                .size(70.dp)
-                .clip(CircleShape)
-                .background(Color.White)
-                .padding(4.dp)
-                .clip(CircleShape)
-        ) {
-            Image(
-                painter = painterResource(id = historia.avatarResId),
-                contentDescription = historia.nome,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
-        Spacer(modifier = Modifier.width(16.dp))
-        Column {
-            Text(
-                text = "${historia.nome}, ${historia.idade}",
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = historia.historia,
-                color = Color.White.copy(alpha = 0.9f),
-                fontSize = 16.sp,
-                lineHeight = 22.sp
-            )
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
