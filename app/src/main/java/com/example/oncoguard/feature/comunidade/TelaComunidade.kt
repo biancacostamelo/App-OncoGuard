@@ -27,6 +27,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
@@ -53,6 +54,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Pencil
+import com.composables.icons.lucide.Settings
+import com.composables.icons.lucide.Trash
 import com.example.oncoguard.R
 import com.example.oncoguard.core.components.CustomBottomBar
 import com.google.firebase.Firebase
@@ -98,6 +103,13 @@ fun TelaComunidade(navController: NavController, vm: HistoriaViewModel = viewMod
                 }
 
                 items(historias) { item ->
+                    val donoHistoria = item["uid"]
+                    var showDeleteDialog by remember { mutableStateOf(false) }
+
+                    var showEditDialog by remember { mutableStateOf(false) }
+                    var editText by remember { mutableStateOf(item["historia"] as? String ?: "") }
+
+                    // uid = currentUid
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -105,7 +117,7 @@ fun TelaComunidade(navController: NavController, vm: HistoriaViewModel = viewMod
                             .background(PinkCard)
                             .clickable {
                                 val uid = item["uid"] ?: return@clickable
-                                val encoded = Uri.encode(uid)
+                                val encoded = Uri.encode(uid as String?)
                                 navController.navigate("TelaPerfilUsuario/$encoded")
                             }
                             .padding(20.dp),
@@ -121,27 +133,119 @@ fun TelaComunidade(navController: NavController, vm: HistoriaViewModel = viewMod
                         ) {
                             AsyncImage(
                                 model = item["foto"],
-                                contentDescription = item["nome"],
+                                contentDescription = item["nome"] as? String ?: "",
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
-                        Column {
+                        Column(Modifier.fillMaxWidth(0.76f)) {
                             Text(
-                                text = item["nome"] ?: "sem nome",
+                                text = item["nome"] as? String ?: "",
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                item["historia"] ?: "",
+                                item["historia"] as? String ?: "",
                                 color = Color.White.copy(alpha = 0.9f),
                                 fontSize = 16.sp,
-                                lineHeight = 22.sp
+                                lineHeight = 22.sp,
                             )
                         }
+                        if (uid == donoHistoria) {
+                            Row() {
+                                Icon(
+                                    imageVector = Lucide.Pencil,
+                                    contentDescription = "Editar",
+                                    tint = Color(0xFFFFFFFF),
+                                    modifier = Modifier
+                                        .clickable {
+                                            showEditDialog = true
+                                        }
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                Icon(
+                                    imageVector = Lucide.Trash,
+                                    contentDescription = "Deletar",
+                                    tint = Color(0xFFFFFFFF),
+                                    modifier = Modifier
+                                        .clickable {
+                                            showDeleteDialog = true
+                                        }
+                                )
+                            }
+                        }
+
+                        if (showDeleteDialog) {
+                            AlertDialog(
+                                onDismissRequest = { showDeleteDialog = false },
+                                title = { Text("Confirmar exclusão") },
+                                text = { Text("Tem certeza que deseja excluir esta história?") },
+                                confirmButton = {
+                                    Text(
+                                        text = "Excluir",
+                                        color = Color.Red,
+                                        modifier = Modifier.clickable {
+                                            val id = item["id"] as? String ?: ""
+                                            vm.deletarHistoria(id)
+                                            showDeleteDialog = false
+                                        }
+                                    )
+                                },
+                                dismissButton = {
+                                    Text(
+                                        text = "Cancelar",
+                                        modifier = Modifier.clickable {
+                                            showDeleteDialog = false
+                                        }
+                                    )
+                                }
+                            )
+                        }
+
+                        if (showEditDialog) {
+                            AlertDialog(
+                                onDismissRequest = { showEditDialog = false },
+                                title = { Text("Editar história") },
+                                text = {
+                                    Column {
+                                        Text("Altere o texto como desejar:")
+                                        Spacer(Modifier.height(10.dp))
+                                        OutlinedTextField(
+                                            value = editText,
+                                            onValueChange = { editText = it },
+                                            modifier = Modifier.fillMaxWidth(),
+                                            placeholder = { Text("Escreva sua história...") },
+                                            maxLines = 5
+                                        )
+                                    }
+                                },
+                                confirmButton = {
+                                    Text(
+                                        text = "Salvar",
+                                        color = Color(0xFF54A1E0),
+                                        modifier = Modifier.clickable {
+                                            val id = item["id"] as? String ?: ""
+                                            vm.atualizarHistoria(id, editText)
+                                            showEditDialog = false
+                                        }
+                                    )
+                                },
+                                dismissButton = {
+                                    Text(
+                                        text = "Cancelar",
+                                        modifier = Modifier.clickable {
+                                            showEditDialog = false
+                                        }
+                                    )
+                                }
+                            )
+                        }
+
                     }
                 }
 

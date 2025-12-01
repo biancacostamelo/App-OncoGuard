@@ -159,13 +159,6 @@ fun LoginScreen(navController: NavController) {
                     }
 
                     Text(
-                        text = "Ou entre com",
-                        color = Color(0xFF64002C),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-
-                    Text(
                         text = "Não tem uma conta? Cadastrar",
                         color = Color(0xFF64002C),
                         fontWeight = FontWeight.Medium,
