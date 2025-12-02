@@ -75,6 +75,7 @@ fun TelaMedico(navController: NavController) {
                 .fillMaxSize()
                 .background(Color.White)
                 .padding(paddingValues)
+                .background(Color.White)
 
                 // Permite rolar o conteúdo caso a tela seja pequena
                 .verticalScroll(rememberScrollState())

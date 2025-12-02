@@ -46,6 +46,7 @@ fun TelaAcolhimento(navController: NavController) {
                 .fillMaxSize()
                 .verticalScroll(scrollState)
                 .padding(paddingValues)
+                .background(Color.White)
         ) {
 
             // Barra azul superior

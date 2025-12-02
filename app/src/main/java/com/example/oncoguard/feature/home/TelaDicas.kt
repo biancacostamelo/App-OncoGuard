@@ -100,6 +100,7 @@ fun TelaDicas(navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(scrollState)
+                .background(Color.White)
         ) {
             // 🔹 Barra superior colorida
             Box(

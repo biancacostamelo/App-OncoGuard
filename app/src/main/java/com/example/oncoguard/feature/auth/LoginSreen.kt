@@ -137,10 +137,7 @@ fun LoginScreen(navController: NavController) {
                         label = { Text("Senha", color = Color(0xFF4F4E4E)) },
                         textStyle = TextStyle(color = Color(0xFF494949)),
                         shape = RoundedCornerShape(10.dp),
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.NumberPassword
-                        )
+                        visualTransformation = PasswordVisualTransformation()
                     )
                     Button(
                         onClick = { login() },

@@ -103,6 +103,7 @@ fun TelaEsperanca(navController: NavController) {
                 .fillMaxSize()
                 .verticalScroll(scrollState)
                 .padding(paddingValues)
+                .background(Color.White)
         ) {
 
             // Cabeçalho fixo, mas ainda rola junto

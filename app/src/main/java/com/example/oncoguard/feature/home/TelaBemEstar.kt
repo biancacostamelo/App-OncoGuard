@@ -47,6 +47,7 @@ fun TelaBemEstar(navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(scrollState)
+                .background(Color.White)
         ) {
 
             // Barra azul superior
