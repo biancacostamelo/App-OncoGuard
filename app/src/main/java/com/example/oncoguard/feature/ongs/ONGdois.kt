@@ -193,7 +193,7 @@ fun ContactItem(icon: ImageVector, text: String, url: String) {
             modifier = Modifier.size(22.dp)
         )
         Spacer(modifier = Modifier.width(12.dp))
-        Text(text, style = MaterialTheme.typography.bodyMedium)
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = Color(0xFF4A4A4A))
     }
 }
 
