@@ -145,15 +145,13 @@ fun PlanoPrata(navController: NavController) {
                 ) {
 
                     Button(
-                        onClick = {
-                            textoBotao = "Plano atual"
-                        },
+                        onClick = {},
                         shape = RoundedCornerShape(21.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = textoBotao,
+                            text = "Plano atual",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = Color.White

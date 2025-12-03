@@ -99,7 +99,7 @@ fun PlanosScreen(navController: NavController) {
                             )
                             Spacer(modifier = Modifier.width(7.dp))
                             Text(
-                                "R$/ mês",
+                                "/ mês",
                                 color = Color(0x9F232323),
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
@@ -159,7 +159,7 @@ fun PlanosScreen(navController: NavController) {
                             )
                             Spacer(modifier = Modifier.width(7.dp))
                             Text(
-                                "R$/ mês",
+                                "/ mês",
                                 color = Color(0x9F232323),
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
@@ -219,7 +219,7 @@ fun PlanosScreen(navController: NavController) {
                             )
                             Spacer(modifier = Modifier.width(7.dp))
                             Text(
-                                "R$/ mês",
+                                "/ mês",
                                 color = Color(0x9F232323),
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
@@ -232,7 +232,7 @@ fun PlanosScreen(navController: NavController) {
                             modifier = Modifier
                                 .width(184.dp),
                             shape = RoundedCornerShape(60.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB60158))
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray)
                         ) {
                             Text(
                                 text = "Plano atual",
