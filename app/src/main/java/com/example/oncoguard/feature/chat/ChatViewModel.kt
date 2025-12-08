@@ -32,7 +32,7 @@ class ChatViewModel : ViewModel() {
     }
 
     // --- SEU WEBHOOK (mantido igual) ---
-    private val webhookUrl = "https://oncoguard.app.n8n.cloud/webhook/chat"
+    private val webhookUrl = "https://oncoguard2.app.n8n.cloud/webhook-test/chat"
 
     // --- LISTA DE MENSAGENS (agora com ChatMessage) ---
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
