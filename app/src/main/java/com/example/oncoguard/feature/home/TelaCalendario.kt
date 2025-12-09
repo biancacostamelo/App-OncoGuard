@@ -64,6 +64,7 @@ fun TelaCalendario(navController: NavController) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(paddingValues)
+                .background(Color.White)
         ) {
             Box(
                 modifier = Modifier
